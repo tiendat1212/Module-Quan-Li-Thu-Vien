@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/modules/librarymgt/functions.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1770044823091,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1770050143629,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,5 +2,5 @@\n if (!defined('NV_MAINFILE')) {\r\n     exit('Stop!!!');\r\n }\r\n \r\n-define('NV_IS_MOD_SIMPLELIB', true);\r\n+define('NV_IS_MOD_LIBRARYMGT', true);\r\n"
+                },
+                {
+                    "date": 1770051635300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <?php\r\n-if (!defined('NV_MAINFILE')) {\r\n+if (!defined('NV_SYSTEM')) {\r\n     exit('Stop!!!');\r\n }\r\n \r\n define('NV_IS_MOD_LIBRARYMGT', true);\r\n"
+                }
+            ],
+            "date": 1770044823091,
+            "name": "Commit-0",
+            "content": "<?php\r\nif (!defined('NV_MAINFILE')) {\r\n    exit('Stop!!!');\r\n}\r\n\r\ndefine('NV_IS_MOD_SIMPLELIB', true);\r\n"
+        }
+    ]
+}

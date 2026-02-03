@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/modules/librarymgt/admin.menu.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1770046754179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1770046754179,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\n/**\r\n * NukeViet Content Management System\r\n * @version 5.x\r\n * @author VINADES.,JSC <contact@vinades.vn>\r\n * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved\r\n * @license GNU/GPL version 2 or any later version\r\n * @see https://github.com/nukeviet The NukeViet CMS GitHub project\r\n */\r\n\r\nif (!defined('NV_ADMIN')) {\r\n    exit('Stop!!!');\r\n}\r\n\r\n$menu_sub = [];\r\n$menu_sub['add_new'] = $nv_Lang->getModule('add_new');\r\n$menu_sub['config'] = $nv_Lang->getModule('config');\r\n$submenu['type'] = $nv_Lang->getModule('theloai');\r\n$submenu['main'] = [\r\n    'title' => $nv_Lang->getModule('library_manager'),\r\n    'submenu' => $menu_sub\r\n];\r\n\r\n$menu_sub_2 = [];\r\n$menu_sub_2['add_new_2'] = $nv_Lang->getModule('add_new');\r\n$menu_sub_2['config_2'] = $nv_Lang->getModule('config');\r\n$submenu['sach'] = [\r\n    'title' => $nv_Lang->getModule('library_manager_2'),\r\n    'submenu' => $menu_sub_2\r\n];\r\n"
+        }
+    ]
+}

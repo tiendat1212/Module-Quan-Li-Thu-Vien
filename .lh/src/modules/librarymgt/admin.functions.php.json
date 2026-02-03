@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/modules/librarymgt/admin.functions.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1770046762627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1770046805113,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,21 @@\n+<?php\r\n+\r\n+/**\r\n+ * NukeViet Content Management System\r\n+ * @version 5.x\r\n+ * @author VINADES.,JSC <contact@vinades.vn>\r\n+ * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved\r\n+ * @license GNU/GPL version 2 or any later version\r\n+ * @see https://github.com/nukeviet The NukeViet CMS GitHub project\r\n+ */\r\n+\r\n+if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN')) {\r\n+    exit('Stop!!!');\r\n+}\r\n+$allow_func = array('main', 'config', 'content');\r\n+define('NV_IS_FILE_ADMIN', true);\r\n+\r\n+// list các function dùng chung cho admin\r\n+function test_fun ($id) {\r\n+    \r\n+}\r\n"
+                }
+            ],
+            "date": 1770046762627,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\n/**\r\n * NukeViet Content Management System\r\n * @version 5.x\r\n * @author VINADES.,JSC <contact@vinades.vn>\r\n * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved\r\n * @license GNU/GPL version 2 or any later version\r\n * @see https://github.com/nukeviet The NukeViet CMS GitHub project\r\n */\r\n\r\nif (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN')) {\r\n    exit('Stop!!!');\r\n}\r\n$allow_func = array('main', 'config', 'content');\r\ndefine('NV_IS_FILE_ADMIN', true);\r\n\r\n// list các function dùng chung cho admin\r\nfunction test_fun ($id) {\r\n    \r\n}\r\n"
+        }
+    ]
+}
