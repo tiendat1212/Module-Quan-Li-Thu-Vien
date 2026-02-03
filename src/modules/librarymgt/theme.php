@@ -9,26 +9,55 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-if (!defined('NV_IS_MOD_LIBRABY')) {
+if (!defined('NV_IS_MOD_LIBRARYMGT')) {
     exit('Stop!!!');
 }
 
 /**
  * nv_theme_detail()
- *
- * @param array $array_data
- * @return string
+ * Hiển thị chi tiết sách và xử lý logic mượn sách
  */
-function nv_theme_detail($array_data)
+function nv_theme_detail($array_data, $allow_borrow, $error_message)
 {
-    global $op;
     [$template, $dir] = get_module_tpl_dir('detail.tpl', true);
     $xtpl = new XTemplate('detail.tpl', $dir);
     $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
     $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('TEMPLATE', $template);
 
-    $xtpl->assign('CTS', $array_data);
+    // Gán dữ liệu sách vào biến CONTENT để khớp với file detail.tpl đã hướng dẫn
+    $xtpl->assign('CONTENT', $array_data);
+
+    // Xử lý hiển thị nút mượn sách hoặc thông báo lỗi (Tooltip)
+    if ($allow_borrow) {
+        $xtpl->parse('main.allow_borrow');
+    } else {
+        $xtpl->assign('ERROR_MESSAGE', $error_message);
+        $xtpl->parse('main.error_borrow');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
+ * nv_theme_history()
+ * Hiển thị lịch sử mượn sách của người dùng
+ */
+function nv_theme_history($array_data)
+{
+    [$template, $dir] = get_module_tpl_dir('history.tpl', true);
+    $xtpl = new XTemplate('history.tpl', $dir);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
+    $xtpl->assign('TEMPLATE', $template);
+
+    if (!empty($array_data)) {
+        foreach ($array_data as $value) {
+            $xtpl->assign('ROW', $value);
+            $xtpl->parse('main.row');
+        }
+    }
 
     $xtpl->parse('main');
     return $xtpl->text('main');
@@ -36,10 +65,6 @@ function nv_theme_detail($array_data)
 
 /**
  * nv_theme_list()
- *
- * @param array $array_data
- * @param mixed $generate_page
- * @return string
  */
 function nv_theme_list($array_data, $generate_page)
 {

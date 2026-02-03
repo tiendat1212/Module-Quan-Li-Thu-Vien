@@ -13,6 +13,6 @@ if (!defined('NV_SYSTEM')) {
     exit('Stop!!!');
 }
 
-define('NV_IS_MOD_LIBRABY', true);
+define('NV_IS_MOD_LIBRARYMGT', true);
 
 // list các mảng dùng chung, hoặc hàm dùng chung cho ngoài site
