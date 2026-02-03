@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/modules/librarymgt/theme.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1770046735813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1770046735813,
+            "name": "Commit-0",
+            "content": "<?php\r\n\r\n/**\r\n * NukeViet Content Management System\r\n * @version 5.x\r\n * @author VINADES.,JSC <contact@vinades.vn>\r\n * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved\r\n * @license GNU/GPL version 2 or any later version\r\n * @see https://github.com/nukeviet The NukeViet CMS GitHub project\r\n */\r\n\r\nif (!defined('NV_IS_MOD_LIBRABY')) {\r\n    exit('Stop!!!');\r\n}\r\n\r\n/**\r\n * nv_theme_detail()\r\n *\r\n * @param array $array_data\r\n * @return string\r\n */\r\nfunction nv_theme_detail($array_data)\r\n{\r\n    global $op;\r\n    [$template, $dir] = get_module_tpl_dir('detail.tpl', true);\r\n    $xtpl = new XTemplate('detail.tpl', $dir);\r\n    $xtpl->assign('LANG', \\NukeViet\\Core\\Language::$lang_module);\r\n    $xtpl->assign('GLANG', \\NukeViet\\Core\\Language::$lang_global);\r\n    $xtpl->assign('TEMPLATE', $template);\r\n\r\n    $xtpl->assign('CTS', $array_data);\r\n\r\n    $xtpl->parse('main');\r\n    return $xtpl->text('main');\r\n}\r\n\r\n/**\r\n * nv_theme_list()\r\n *\r\n * @param array $array_data\r\n * @param mixed $generate_page\r\n * @return string\r\n */\r\nfunction nv_theme_list($array_data, $generate_page)\r\n{\r\n    [$template, $dir] = get_module_tpl_dir('main.tpl', true);\r\n    $xtpl = new XTemplate('main.tpl', $dir);\r\n    $xtpl->assign('LANG', \\NukeViet\\Core\\Language::$lang_module);\r\n    $xtpl->assign('GLANG', \\NukeViet\\Core\\Language::$lang_global);\r\n    $xtpl->assign('TEMPLATE', $template);\r\n\r\n    if (!empty($array_data)) {\r\n        foreach ($array_data as $value) {\r\n            $xtpl->assign('LOOP', $value);\r\n            $xtpl->parse('main.loop');\r\n        }\r\n\r\n        if (!empty($generate_page)) {\r\n            $xtpl->assign('GENERATE_PAGE', $generate_page);\r\n            $xtpl->parse('main.gp');\r\n        }\r\n    }\r\n\r\n    $xtpl->parse('main');\r\n    return $xtpl->text('main');\r\n}\r\n"
+        }
+    ]
+}

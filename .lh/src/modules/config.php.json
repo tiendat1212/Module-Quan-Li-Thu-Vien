@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/modules/config.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1770051289940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1770051289940,
+            "name": "Commit-0",
+            "content": "[extension]\r\nid=\"0\"\r\ntype=\"module\"\r\nname=\"librarymgt\"\r\nversion=\"5.0.0\"\r\n\r\n[author]\r\nname=\"VINADES.,JSC\"\r\nemail=\"contact@vinades.vn\"\r\n\r\n[note]\r\ntext=\"\"\r\n"
+        }
+    ]
+}
