@@ -60,6 +60,7 @@
 /src/includes/vendor/**/phpunit.xml*
 /src/includes/vendor/**/phpunit.php
 
+
 #vendor docs ignore
 /src/includes/vendor/**/doc/
 /src/includes/vendor/**/docs/
@@ -94,6 +95,8 @@
 /src/uploads/menu/
 /src/uploads/news/
 
+/src
+
 # Allow default file
 !/src/uploads/banners/bongoaigiao.jpg
 !/src/uploads/banners/vinades.jpg
@@ -101,3 +104,7 @@
 !/src/uploads/banners/webnhanh_vn.png
 !/src/data/cache/index.html
 !/src/data/tmp/index.html
+
+# Ignore documentation files
+*.docx
+*.doc
