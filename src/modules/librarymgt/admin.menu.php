@@ -16,7 +16,7 @@ if (!defined('NV_ADMIN')) {
 $menu_sub = [];
 $menu_sub['add_new'] = $nv_Lang->getModule('add_new');
 $menu_sub['config'] = $nv_Lang->getModule('config');
-$submenu['type'] = $nv_Lang->getModule('theloai');
+$submenu['cat'] = $nv_Lang->getModule('Quản lý thể loại');
 $submenu['main'] = [
     'title' => $nv_Lang->getModule('library_manager'),
     'submenu' => $menu_sub
