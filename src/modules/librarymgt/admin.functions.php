@@ -15,7 +15,6 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
 $allow_func = array('main', 'books', 'book_add', 'book_edit', 'book_delete', 'api');
 define('NV_IS_FILE_ADMIN', true);
 
-
 //Lấy danh sách sách với phân trang, lọc
 
 function nv_get_books_list($page = 1, $per_page = 10, $filters = [])

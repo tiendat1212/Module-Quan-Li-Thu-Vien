@@ -81,8 +81,8 @@ Nhóm thống nhất các nguyên tắc sau:
 | :-: | :-: |
 |Trang phụ trách|Quản lí sách, Thêm/Sửa sách|
 |Công việc|CRUD sách, xây API khung|
-|Dữ liệu|API trả dữ liệu |
-|Kết quả|Admin quản lí sách + API dùng chung|
+|Dữ liệu|Cần CSDL mẫu để test nội dung hiển thị|
+|Kết quả|Đã tạo 3 trang admin (quản lí sách, thêm sách, sửa sách); cần dữ liệu mẫu để kiểm thử hiển thị|
 
 ### <a name="_1vajpp36p8cw"></a>**Đỗ Thị Ngân – Admin Control & QA**
 
