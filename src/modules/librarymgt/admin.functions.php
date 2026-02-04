@@ -15,9 +15,9 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
 $allow_func = array('main', 'books', 'book_add', 'book_edit', 'book_delete', 'api');
 define('NV_IS_FILE_ADMIN', true);
 
-/**
- * Lấy danh sách sách với phân trang, lọc
- */
+
+//Lấy danh sách sách với phân trang, lọc
+
 function nv_get_books_list($page = 1, $per_page = 10, $filters = [])
 {
     global $db;
@@ -51,7 +51,7 @@ function nv_get_books_list($page = 1, $per_page = 10, $filters = [])
 
     // Lấy tổng số bản ghi
     $result = $db->query('SELECT COUNT(*) as count FROM ' . $tb_books . ' b WHERE ' . $where_str);
-    $row = $result->fetch_assoc();
+    $row = $result->fetch(PDO::FETCH_ASSOC);
     $total = (int) $row['count'];
 
     // Lấy dữ liệu phân trang
@@ -63,7 +63,7 @@ function nv_get_books_list($page = 1, $per_page = 10, $filters = [])
 
     $result = $db->query($sql);
     $books = [];
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $books[] = $row;
     }
 
@@ -75,9 +75,8 @@ function nv_get_books_list($page = 1, $per_page = 10, $filters = [])
     ];
 }
 
-/**
- * Lấy chi tiết 1 cuốn sách
- */
+//Lấy chi tiết 1 cuốn sách
+
 function nv_get_book($book_id)
 {
     global $db;
@@ -90,12 +89,12 @@ function nv_get_book($book_id)
             WHERE b.id = ' . $book_id;
 
     $result = $db->query($sql);
-    return $result->fetch_assoc();
+    return $result->fetch(PDO::FETCH_ASSOC);
 }
 
-/**
- * Validate dữ liệu sách
- */
+
+// Validate dữ liệu sách
+
 function nv_validate_book($data)
 {
     $errors = [];
@@ -145,7 +144,7 @@ function nv_insert_book($data)
     // Kiểm tra thể loại tồn tại
     $cat_id = (int) $data['cat_id'];
     $result = $db->query('SELECT id FROM ' . $tb_categories . ' WHERE id = ' . $cat_id);
-    if (!$result->fetch_assoc()) {
+    if (!$result->fetch(PDO::FETCH_ASSOC)) {
         return ['success' => false, 'errors' => ['cat_id' => 'Thể loại không tồn tại']];
     }
 
@@ -154,7 +153,7 @@ function nv_insert_book($data)
     
     // Kiểm tra alias đã tồn tại
     $result = $db->query('SELECT id FROM ' . $tb_books . ' WHERE alias = \'' . $db->real_escape_string($alias) . '\'');
-    if ($result->fetch_assoc()) {
+    if ($result->fetch(PDO::FETCH_ASSOC)) {
         $alias = $alias . '-' . time();
     }
 
@@ -206,7 +205,7 @@ function nv_update_book($book_id, $data)
     // Kiểm tra thể loại tồn tại
     $cat_id = (int) $data['cat_id'];
     $result = $db->query('SELECT id FROM ' . $tb_categories . ' WHERE id = ' . $cat_id);
-    if (!$result->fetch_assoc()) {
+    if (!$result->fetch(PDO::FETCH_ASSOC)) {
         return ['success' => false, 'errors' => ['cat_id' => 'Thể loại không tồn tại']];
     }
 
@@ -261,7 +260,7 @@ function nv_delete_book($book_id)
 
     // Kiểm tra có bản ghi mượn liên quan
     $result = $db->query('SELECT COUNT(*) as count FROM ' . $tb_borrows . ' WHERE book_id = ' . $book_id . ' AND status IN (0, 1, 4)');
-    $row = $result->fetch_assoc();
+    $row = $result->fetch(PDO::FETCH_ASSOC);
     if ($row['count'] > 0) {
         return ['success' => false, 'error' => 'Không thể xóa sách có bản ghi mượn đang hoạt động'];
     }
