@@ -43,8 +43,9 @@ function nv_get_books_list($page = 1, $per_page = 10, $filters = [])
 
     // Tìm kiếm theo từ khóa (title, author, isbn)
     if (!empty($filters['search'])) {
-        $search = '%' . $db->real_escape_string($filters['search']) . '%';
-        $where[] = '(b.title LIKE \'' . $search . '\' OR b.author LIKE \'' . $search . '\' OR b.isbn LIKE \'' . $search . '\')';
+        $search = '%' . $filters['search'] . '%';
+        $search = $db->quote($search);
+        $where[] = '(b.title LIKE ' . $search . ' OR b.author LIKE ' . $search . ' OR b.isbn LIKE ' . $search . ')';
     }
 
     $where_str = implode(' AND ', $where);
@@ -152,24 +153,24 @@ function nv_insert_book($data)
     $alias = nv_create_alias($data['title']);
     
     // Kiểm tra alias đã tồn tại
-    $result = $db->query('SELECT id FROM ' . $tb_books . ' WHERE alias = \'' . $db->real_escape_string($alias) . '\'');
+    $result = $db->query('SELECT id FROM ' . $tb_books . ' WHERE alias = ' . $db->quote($alias));
     if ($result->fetch(PDO::FETCH_ASSOC)) {
         $alias = $alias . '-' . time();
     }
 
-    $title = $db->real_escape_string($data['title']);
-    $author = $db->real_escape_string($data['author']);
-    $publisher = isset($data['publisher']) ? $db->real_escape_string($data['publisher']) : '';
-    $isbn = isset($data['isbn']) ? $db->real_escape_string($data['isbn']) : '';
+        $title = $db->quote($data['title']);
+        $author = $db->quote($data['author']);
+        $publisher = isset($data['publisher']) ? $db->quote($data['publisher']) : $db->quote('');
+        $isbn = isset($data['isbn']) ? $db->quote($data['isbn']) : $db->quote('');
     $publish_year = isset($data['publish_year']) ? (int) $data['publish_year'] : 0;
-    $description = isset($data['description']) ? $db->real_escape_string($data['description']) : '';
-    $image = isset($data['image']) ? $db->real_escape_string($data['image']) : '';
+        $description = isset($data['description']) ? $db->quote($data['description']) : $db->quote('');
+        $image = isset($data['image']) ? $db->quote($data['image']) : $db->quote('');
     $quantity = (int) $data['quantity'];
     $status = isset($data['status']) ? (int) $data['status'] : 1;
     $now = time();
 
     $sql = 'INSERT INTO ' . $tb_books . ' (cat_id, title, alias, author, publisher, publish_year, isbn, quantity, description, image, status, add_time, edit_time)
-            VALUES (' . $cat_id . ', \'' . $title . '\', \'' . $alias . '\', \'' . $author . '\', \'' . $publisher . '\', ' . $publish_year . ', \'' . $isbn . '\', ' . $quantity . ', \'' . $description . '\', \'' . $image . '\', ' . $status . ', ' . $now . ', ' . $now . ')';
+            VALUES (' . $cat_id . ', ' . $title . ', ' . $db->quote($alias) . ', ' . $author . ', ' . $publisher . ', ' . $publish_year . ', ' . $isbn . ', ' . $quantity . ', ' . $description . ', ' . $image . ', ' . $status . ', ' . $now . ', ' . $now . ')';
 
     if ($db->query($sql)) {
         return ['success' => true, 'id' => $db->insert_id, 'alias' => $alias];
@@ -209,27 +210,27 @@ function nv_update_book($book_id, $data)
         return ['success' => false, 'errors' => ['cat_id' => 'Thể loại không tồn tại']];
     }
 
-    $title = $db->real_escape_string($data['title']);
-    $author = $db->real_escape_string($data['author']);
-    $publisher = isset($data['publisher']) ? $db->real_escape_string($data['publisher']) : '';
-    $isbn = isset($data['isbn']) ? $db->real_escape_string($data['isbn']) : '';
+    $title = $db->quote($data['title']);
+    $author = $db->quote($data['author']);
+    $publisher = isset($data['publisher']) ? $db->quote($data['publisher']) : $db->quote('');
+    $isbn = isset($data['isbn']) ? $db->quote($data['isbn']) : $db->quote('');
     $publish_year = isset($data['publish_year']) ? (int) $data['publish_year'] : 0;
-    $description = isset($data['description']) ? $db->real_escape_string($data['description']) : '';
-    $image = isset($data['image']) ? $db->real_escape_string($data['image']) : $book['image'];
+    $description = isset($data['description']) ? $db->quote($data['description']) : $db->quote('');
+    $image = isset($data['image']) ? $db->quote($data['image']) : $db->quote($book['image']);
     $quantity = (int) $data['quantity'];
     $status = isset($data['status']) ? (int) $data['status'] : 1;
     $now = time();
 
     $sql = 'UPDATE ' . $tb_books . ' SET
             cat_id = ' . $cat_id . ',
-            title = \'' . $title . '\',
-            author = \'' . $author . '\',
-            publisher = \'' . $publisher . '\',
+            title = ' . $title . ',
+            author = ' . $author . ',
+            publisher = ' . $publisher . ',
             publish_year = ' . $publish_year . ',
-            isbn = \'' . $isbn . '\',
+            isbn = ' . $isbn . ',
             quantity = ' . $quantity . ',
-            description = \'' . $description . '\',
-            image = \'' . $image . '\',
+            description = ' . $description . ',
+            image = ' . $image . ',
             status = ' . $status . ',
             edit_time = ' . $now . '
             WHERE id = ' . $book_id;
