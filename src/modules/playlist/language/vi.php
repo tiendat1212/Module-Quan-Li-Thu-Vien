@@ -14,17 +14,21 @@ if (!defined('NV_MAINFILE')) {
 }
 
 $lang_translator['author'] = 'VINADES.,JSC <contact@vinades.vn>';
-$lang_translator['createdate'] = '01/01/2026, 07:15';
+$lang_translator['createdate'] = '26/01/2026, 10:00';
 $lang_translator['copyright'] = '@Copyright (C) 2010 VINADES.,JSC. All rights reserved';
 $lang_translator['info'] = '';
 $lang_translator['langtype'] = 'lang_module';
 
-$lang_module['menu_manager'] = 'Module Library';
-$lang_module['add_new'] = 'Thêm sách';
+$lang_module['playlist_manager'] = 'Quản lý Playlist';
+$lang_module['list_music'] = 'Danh sách bài hát';
+$lang_module['add_new_music'] = 'Thêm bài hát mới';
 $lang_module['config'] = 'Cấu hình';
-$lang_module['library_manager'] = 'Quản lý module thư viện';
-$lang_module['books_manager'] = 'Quản lý sách';
-$lang_module['book_add'] = 'Thêm sách';
-$lang_module['book_edit'] = 'Sửa sách';
-$lang_module['book_delete'] = 'Xóa sách';
-$lang_module['api'] = 'API';
+$lang_module['title'] = 'Tiêu đề';
+$lang_module['description'] = 'Mô tả';
+$lang_module['duration'] = 'Thời lượng';
+$lang_module['status'] = 'Trạng thái';
+$lang_module['actions'] = 'Hành động';
+$lang_module['edit'] = 'Sửa';
+$lang_module['delete'] = 'Xóa';
+$lang_module['active'] = 'Kích hoạt';
+$lang_module['inactive'] = 'Vô hiệu hóa';

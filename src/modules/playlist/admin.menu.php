@@ -14,11 +14,11 @@ if (!defined('NV_ADMIN')) {
 }
 
 $menu_sub = [];
-$menu_sub['books'] = $nv_Lang->getModule('books_manager');
-$menu_sub['book_add'] = $nv_Lang->getModule('book_add');
-$menu_sub['api'] = $nv_Lang->getModule('api');
+$menu_sub['main'] = $nv_Lang->getModule('list_music');
+$menu_sub['add'] = $nv_Lang->getModule('add_new_music');
+$menu_sub['config'] = $nv_Lang->getModule('config');
 
 $submenu['main'] = [
-    'title' => $nv_Lang->getModule('library_manager'),
+    'title' => $nv_Lang->getModule('playlist_manager'),
     'submenu' => $menu_sub
 ];

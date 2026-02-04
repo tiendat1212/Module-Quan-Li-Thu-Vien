@@ -9,16 +9,10 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-if (!defined('NV_ADMIN')) {
+if (!defined('NV_SYSTEM')) {
     exit('Stop!!!');
 }
 
-$menu_sub = [];
-$menu_sub['books'] = $nv_Lang->getModule('books_manager');
-$menu_sub['book_add'] = $nv_Lang->getModule('book_add');
-$menu_sub['api'] = $nv_Lang->getModule('api');
+define('NV_IS_MOD_PLAYLIST', true);
 
-$submenu['main'] = [
-    'title' => $nv_Lang->getModule('library_manager'),
-    'submenu' => $menu_sub
-];
+// list các mảng dùng chung, hoặc hàm dùng chung cho ngoài site

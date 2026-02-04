@@ -9,13 +9,19 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN')) {
+if (!defined('NV_ADMIN')) {
     exit('Stop!!!');
 }
-$allow_func = array('main', 'books', 'book_add', 'book_edit', 'book_delete', 'api');
+
+$allow_func = array('main', 'config', 'add', 'edit', 'delete');
 define('NV_IS_FILE_ADMIN', true);
 
 // list các function dùng chung cho admin
-function test_fun ($id) {
-    
+function nv_playlist_format_duration($seconds) {
+    if (empty($seconds)) {
+        return '--:--';
+    }
+    $minutes = intval($seconds / 60);
+    $secs = $seconds % 60;
+    return sprintf('%02d:%02d', $minutes, $secs);
 }

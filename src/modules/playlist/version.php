@@ -10,17 +10,17 @@
  */
 
 $module_version = [
-    'name' => 'Library', // tên module
-    'modfuncs' => 'main', // Danh sách các func
-    'submenu' => 'main', // Các funcs hiển thị submenu
-    'is_sysmod' => 0,// module hệ thống hay không? 1: hệ thống 0: module thường
+    'name' => 'Playlist', // tên module
+    'modfuncs' => 'main, detail', // Danh sách các func
+    'submenu' => 'main, detail', // Các funcs hiển thị submenu
+    'is_sysmod' => 0, // module hệ thống hay không? 1: hệ thống 0: module thường
     'virtual' => 0, // có phải module ảo không? 1: thật, 0:ảo
     'version' => '5.0.00', // phiên bản của module
-    'date' => 'Saturday, July 17, 2021 4:00:00 PM GMT+07:00',// ngày phát hành phiên bản
+    'date' => 'Sunday, January 26, 2026 10:00:00 AM GMT+07:00', // ngày phát hành phiên bản
     'author' => 'VINADES.,JSC <contact@vinades.vn>', // tác giả viết module
     'note' => '',
     'uploads_dir' => [
         $module_upload
     ],
-    'icon' => 'fa-solid fa-network-wired'
+    'icon' => 'fa-solid fa-music'
 ];
