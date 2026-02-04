@@ -3,55 +3,44 @@
 /**
  * NukeViet Content Management System
  * @version 5.x
- * @author VINADES.,JSC <contact@vinades.vn>
- * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved
- * @license GNU/GPL version 2 or any later version
- * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-if (!defined('NV_IS_MOD_LIBRABY')) {
+if (!defined('NV_IS_MOD_LIBRABYMGT')) {
     exit('Stop!!!');
 }
 
-/**
- * nv_theme_detail()
- *
- * @param array $array_data
- * @return string
- */
-function nv_theme_detail($array_data)
+function nv_theme_books_list($books, $categories, $current_catid, $generate_page, $page_title = '')
 {
-    global $op;
-    [$template, $dir] = get_module_tpl_dir('detail.tpl', true);
-    $xtpl = new XTemplate('detail.tpl', $dir);
+    [$template, $dir] = get_module_tpl_dir('books_list.tpl', true);
+    $xtpl = new XTemplate('books_list.tpl', $dir);
     $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
     $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('TEMPLATE', $template);
+    $xtpl->assign('PAGE_TITLE', $page_title);
 
-    $xtpl->assign('CTS', $array_data);
+    $xtpl->assign('URL_ALL', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $GLOBALS['module_name']);
 
-    $xtpl->parse('main');
-    return $xtpl->text('main');
-}
+    foreach ($categories as $id => $name) {
+        $xtpl->assign('CAT', [
+            'id' => $id,
+            'name' => $name,
+            'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $GLOBALS['module_name'] . '&' . NV_OP_VARIABLE . '=category&catid=' . (int) $id,
+            'active' => ((int) $current_catid === (int) $id) ? 1 : 0
+        ]);
+        if ((int) $current_catid === (int) $id) {
+            $xtpl->parse('main.cat_loop.active');
+        }
+        $xtpl->parse('main.cat_loop');
+    }
 
-/**
- * nv_theme_list()
- *
- * @param array $array_data
- * @param mixed $generate_page
- * @return string
- */
-function nv_theme_list($array_data, $generate_page)
-{
-    [$template, $dir] = get_module_tpl_dir('main.tpl', true);
-    $xtpl = new XTemplate('main.tpl', $dir);
-    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
-    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
-    $xtpl->assign('TEMPLATE', $template);
+    if (defined('NV_IS_USER')) {
+        $xtpl->assign('URL_BORROWED', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $GLOBALS['module_name'] . '&' . NV_OP_VARIABLE . '=borrowed');
+        $xtpl->parse('main.borrowed_link');
+    }
 
-    if (!empty($array_data)) {
-        foreach ($array_data as $value) {
-            $xtpl->assign('LOOP', $value);
+    if (!empty($books)) {
+        foreach ($books as $row) {
+            $xtpl->assign('ROW', $row);
             $xtpl->parse('main.loop');
         }
 
@@ -59,8 +48,12 @@ function nv_theme_list($array_data, $generate_page)
             $xtpl->assign('GENERATE_PAGE', $generate_page);
             $xtpl->parse('main.gp');
         }
+    } else {
+        $xtpl->parse('main.empty');
     }
 
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
+
+

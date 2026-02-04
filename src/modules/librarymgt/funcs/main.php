@@ -3,30 +3,32 @@
 /**
  * NukeViet Content Management System
  * @version 5.x
- * @author VINADES.,JSC <contact@vinades.vn>
- * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved
- * @license GNU/GPL version 2 or any later version
- * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-if (!defined('NV_IS_MOD_LIBRABY')) {
+if (!defined('NV_IS_MOD_LIBRABYMGT')) {
     exit('Stop!!!');
 }
-$page_title = $module_info['site_title'];
-$array_data = [];
-$per_page = 1;
-$page = $nv_Request->get_page('page', 'post, get', 1);
-$offset = ($page - 1) * $per_page;
-$sql = "SELECT * FROM " . NV_PREFIXLANG . '_' . $module_data . "_rows LIMIT " . $offset . ", " . $per_page;
-$result = $db->query($sql);
-while ($row = $result->fetch()) {
-    $array_data[] = $row;
-}
 
-$num_items = $db->query("SELECT COUNT(*) FROM " . NV_PREFIXLANG . '_' . $module_data . "_rows")->fetchColumn();
-$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
-$generate_page = nv_generate_page($page_url, $num_items, $per_page, $page);
-$contents = nv_theme_list($array_data, $generate_page);
+require_once NV_ROOTDIR . '/modules/' . $module_file . '/theme.php';
+
+$page_title = $module_info['site_title'];
+
+$per_page = 10;
+$page = $nv_Request->get_page('page', 'post,get', 1);
+$page = max(1, (int) $page);
+$offset = ($page - 1) * $per_page;
+
+$tb_books = NV_PREFIXLANG . '_' . $module_data . '_books';
+$tb_categories = NV_PREFIXLANG . '_' . $module_data . '_categories';
+
+$current_catid = 0; // Trang main = tất cả sách
+
+
+//Phân trang
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
+$generate_page = ($num_items > $per_page) ? nv_generate_page($page_url, $num_items, $per_page, $page) : '';
+
+$contents = nv_theme_books_list($books, $categories, $current_catid, $generate_page, $page_title);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);
