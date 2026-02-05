@@ -1,4 +1,4 @@
-    <?php
+<?php
     if (!defined('NV_IS_FILE_ADMIN')) {
         exit('Stop!!!');
     }

@@ -12,7 +12,7 @@
 if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN')) {
     exit('Stop!!!');
 }
-$allow_func = array('main', 'config', 'content', 'cat');
+$allow_func = array('main', 'config', 'content', 'cat', 'borrows');
 define('NV_IS_FILE_ADMIN', true);
 
 // list các function dùng chung cho admin
