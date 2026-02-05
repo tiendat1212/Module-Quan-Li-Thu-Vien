@@ -114,28 +114,6 @@ function nv_get_categories_list($only_active = true)
 }
 
 
-// Lấy thông tin chi tiết sách
-function nv_get_book($book_id)
-{
-    global $db;
-    
-    $book_id = (int) $book_id;
-    $tb_books = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_books';
-    $tb_categories = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_categories';
-    
-    $sql = 'SELECT b.*, c.title as cat_title FROM ' . $tb_books . ' b
-            LEFT JOIN ' . $tb_categories . ' c ON b.cat_id = c.id
-            WHERE b.id = ' . $book_id;
-    
-    $result = $db->query($sql);
-    if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        return $row;
-    }
-    
-    return null;
-}
-
-
 // Validate dữ liệu sách
 
 function nv_validate_book($data)

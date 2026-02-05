@@ -17,7 +17,42 @@ $page_title = $nv_Lang->getModule('book_edit');
 
 $book_id = $nv_Request->get_int('book_id', 'get', 0);
 if ($book_id <= 0) {
-    nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
+    $book_id = $nv_Request->get_int('id', 'get', 0);
+}
+
+if ($book_id <= 0) {
+    $list = nv_get_books_list(1, 200, ['sort' => 'ASC']);
+
+    [$template, $dir] = get_module_tpl_dir('book_edit.tpl', true);
+    $xtpl = new XTemplate('book_edit.tpl', $dir);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
+    $xtpl->assign('MODULE_NAME', $module_name);
+    $xtpl->assign('OP', $op);
+    $xtpl->assign('NV_BASE_ADMINURL', NV_BASE_ADMINURL);
+    $xtpl->assign('NV_NAME_VARIABLE', NV_NAME_VARIABLE);
+    $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
+    $xtpl->assign('BACK_URL', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
+
+    if (!empty($list['books'])) {
+        foreach ($list['books'] as $row) {
+            $xtpl->assign('BOOK', [
+                'id' => $row['id'],
+                'title' => $row['title'],
+                'author' => $row['author']
+            ]);
+            $xtpl->parse('main.select_book.book_option');
+        }
+    }
+
+    $xtpl->parse('main.select_book');
+    $xtpl->parse('main');
+    $contents = $xtpl->text('main');
+
+    include NV_ROOTDIR . '/includes/header.php';
+    echo nv_admin_theme($contents);
+    include NV_ROOTDIR . '/includes/footer.php';
+    exit();
 }
 
 $categories = nv_get_categories_list(false);
@@ -95,7 +130,7 @@ $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('OP', $op);
 $xtpl->assign('NV_BASE_ADMINURL', NV_BASE_ADMINURL);
-$xtpl->assign('NV_BASE_URL', NV_BASE_URL);
+$xtpl->assign('UPLOAD_URL', NV_BASE_SITEURL . NV_UPLOADS_DIR);
 $xtpl->assign('NV_NAME_VARIABLE', NV_NAME_VARIABLE);
 $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('BOOK_ID', $book_id);
@@ -142,4 +177,8 @@ foreach ($status_options as $item) {
 }
 
 $xtpl->parse('main');
-$page_content = $xtpl->text('main');
+$contents = $xtpl->text('main');
+
+include NV_ROOTDIR . '/includes/header.php';
+echo nv_admin_theme($contents);
+include NV_ROOTDIR . '/includes/footer.php';

@@ -1,4 +1,41 @@
 <!-- BEGIN: main -->
+<!-- BEGIN: select_book -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{LANG.select_book}</h3>
+    </div>
+    <div class="panel-body">
+        <form action="{NV_BASE_ADMINURL}index.php" method="get" class="form-horizontal">
+            <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}" />
+            <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}" />
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{LANG.select_book_prompt}</label>
+                <div class="col-sm-9">
+                    <select name="book_id" class="form-control">
+                        <!-- BEGIN: book_option -->
+                        <option value="{BOOK.id}">#{BOOK.id} - {BOOK.title} ({BOOK.author})</option>
+                        <!-- END: book_option -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-edit"></i> {LANG.edit}
+                    </button>
+                    <a href="{BACK_URL}" class="btn btn-default">
+                        <i class="fa fa-arrow-left"></i> {LANG.back}
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: select_book -->
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">{LANG.book_edit}</h3>
@@ -80,7 +117,7 @@
                     <!-- BEGIN: current_image -->
                     <div class="form-group">
                         <p><strong>{LANG.current_image}:</strong></p>
-                        <img src="{NV_BASE_URL}assets/{CURRENT_IMAGE}" alt="Book cover" style="max-width: 200px; max-height: 300px; margin-bottom: 10px; border: 1px solid #ddd; padding: 5px;" />
+                        <img src="{UPLOAD_URL}/{CURRENT_IMAGE}" alt="Book cover" style="max-width: 200px; max-height: 300px; margin-bottom: 10px; border: 1px solid #ddd; padding: 5px;" />
                     </div>
                     <!-- END: current_image -->
                     <input type="file" name="image_file" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
