@@ -114,6 +114,27 @@ function nv_get_categories_list($only_active = true)
 }
 
 
+// Chuẩn hóa dữ liệu sách trả về template
+function nv_normalize_book_template_data(array $data)
+{
+    $publish_year = isset($data['publish_year']) ? (int) $data['publish_year'] : 0;
+    $quantity = isset($data['quantity']) ? (int) $data['quantity'] : 0;
+
+    return [
+        'title' => isset($data['title']) ? trim((string) $data['title']) : '',
+        'author' => isset($data['author']) ? trim((string) $data['author']) : '',
+        'cat_id' => isset($data['cat_id']) ? (int) $data['cat_id'] : 0,
+        'publisher' => isset($data['publisher']) ? trim((string) $data['publisher']) : '',
+        'publish_year' => $publish_year > 0 ? (string) $publish_year : '',
+        'isbn' => isset($data['isbn']) ? trim((string) $data['isbn']) : '',
+        'quantity' => $quantity > 0 ? (string) $quantity : '',
+        'image' => isset($data['image']) ? trim((string) $data['image']) : '',
+        'description' => isset($data['description']) ? trim((string) $data['description']) : '',
+        'status' => isset($data['status']) ? (int) $data['status'] : 1
+    ];
+}
+
+
 // Validate dữ liệu sách
 
 function nv_validate_book($data)

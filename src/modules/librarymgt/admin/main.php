@@ -50,17 +50,22 @@ $categories = nv_get_categories_list(false);
 
 $rows = [];
 foreach ($list['books'] as $row) {
+    $row_id = (int) $row['id'];
+    $row_status = (int) $row['status'];
+    $row_add_time = (int) $row['add_time'];
     $rows[] = [
-        'id' => $row['id'],
-        'title' => $row['title'],
-        'author' => $row['author'],
-        'cat_title' => $row['cat_title'],
-        'quantity' => $row['quantity'],
-        'status_text' => $row['status'] ? $nv_Lang->getModule('status_active') : $nv_Lang->getModule('status_inactive'),
-        'status_class' => $row['status'] ? 'success' : 'danger',
-        'add_date' => nv_date('d/m/Y', $row['add_time']),
-        'edit_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_edit&amp;book_id=' . $row['id'],
-        'delete_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main&amp;op_delete=delete&amp;book_id=' . $row['id'] . '&amp;checkss=' . md5($row['id'] . NV_CHECK_SESSION)
+        'id' => $row_id,
+        'title' => (string) $row['title'],
+        'author' => (string) $row['author'],
+        'cat_title' => isset($row['cat_title']) ? (string) $row['cat_title'] : '',
+        'quantity' => (int) $row['quantity'],
+        'status' => $row_status,
+        'status_text' => $row_status ? $nv_Lang->getModule('status_active') : $nv_Lang->getModule('status_inactive'),
+        'status_class' => $row_status ? 'success' : 'danger',
+        'add_time' => $row_add_time,
+        'add_date' => nv_date('d/m/Y', $row_add_time),
+        'edit_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_edit&amp;book_id=' . $row_id,
+        'delete_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main&amp;op_delete=delete&amp;book_id=' . $row_id . '&amp;checkss=' . md5($row_id . NV_CHECK_SESSION)
     ];
 }
 

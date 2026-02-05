@@ -37,9 +37,9 @@ if ($book_id <= 0) {
     if (!empty($list['books'])) {
         foreach ($list['books'] as $row) {
             $xtpl->assign('BOOK', [
-                'id' => $row['id'],
-                'title' => $row['title'],
-                'author' => $row['author']
+                'id' => (int) $row['id'],
+                'title' => (string) $row['title'],
+                'author' => (string) $row['author']
             ]);
             $xtpl->parse('main.select_book.book_option');
         }
@@ -122,6 +122,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
         }
     }
 }
+
+$data = nv_normalize_book_template_data($data);
 
 [$template, $dir] = get_module_tpl_dir('book_edit.tpl', true);
 $xtpl = new XTemplate('book_edit.tpl', $dir);
