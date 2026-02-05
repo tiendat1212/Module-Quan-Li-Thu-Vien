@@ -92,6 +92,24 @@ function nv_get_book($book_id)
     return $result->fetch(PDO::FETCH_ASSOC);
 }
 
+// Lấy danh sách thể loại
+function nv_get_categories_list($only_active = true)
+{
+    global $db;
+
+    $tb_categories = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_categories';
+    $where = $only_active ? ' WHERE status = 1' : '';
+    $sql = 'SELECT id, title FROM ' . $tb_categories . $where . ' ORDER BY weight ASC, id ASC';
+
+    $result = $db->query($sql);
+    $categories = [];
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $categories[(int) $row['id']] = $row['title'];
+    }
+
+    return $categories;
+}
+
 
 // Validate dữ liệu sách
 
