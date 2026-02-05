@@ -54,11 +54,14 @@ function nv_get_books_list($page = 1, $per_page = 10, $filters = [])
     $row = $result->fetch(PDO::FETCH_ASSOC);
     $total = (int) $row['count'];
 
+    // Xác định hướng sắp xếp
+    $sort_order = (!empty($filters['sort']) && $filters['sort'] === 'DESC') ? 'DESC' : 'ASC';
+
     // Lấy dữ liệu phân trang
     $sql = 'SELECT b.*, c.title as cat_title FROM ' . $tb_books . ' b
             LEFT JOIN ' . $tb_categories . ' c ON b.cat_id = c.id
             WHERE ' . $where_str . '
-            ORDER BY b.id ASC
+            ORDER BY b.id ' . $sort_order . '
             LIMIT ' . $offset . ', ' . $per_page;
 
     $result = $db->query($sql);

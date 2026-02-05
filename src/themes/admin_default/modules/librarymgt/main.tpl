@@ -25,6 +25,13 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <select class="form-control" name="sort">
+                <option value="ASC" {SORT_ASC_SELECTED}>ID Tăng (ASC)</option>
+                <option value="DESC" {SORT_DESC_SELECTED}>ID Giảm (DESC)</option>
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-primary">{LANG.search}</button>
 
         <a href="{ADD_BOOK_URL}" class="btn btn-success pull-right">

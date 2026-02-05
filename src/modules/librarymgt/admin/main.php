@@ -20,6 +20,8 @@ $per_page = 20;
 $search = $nv_Request->get_title('search', 'get', '');
 $cat_id = $nv_Request->get_int('cat_id', 'get', 0);
 $status = $nv_Request->get_int('status', 'get', -1);
+$sort = $nv_Request->get_title('sort', 'get', 'ASC');
+$sort = ($sort === 'DESC') ? 'DESC' : 'ASC';
 
 $op_delete = $nv_Request->get_title('op_delete', 'get', '');
 $book_id = $nv_Request->get_int('book_id', 'get', 0);
@@ -36,7 +38,8 @@ if ($op_delete === 'delete' && $book_id > 0) {
 
 $filters = [
     'search' => $search,
-    'cat_id' => $cat_id
+    'cat_id' => $cat_id,
+    'sort' => $sort
 ];
 if ($status >= 0) {
     $filters['status'] = $status;
@@ -70,9 +73,10 @@ $xtpl->assign('OP', $op);
 $xtpl->assign('SEARCH', $search);
 $xtpl->assign('CAT_ID', $cat_id);
 $xtpl->assign('STATUS', $status);
-$xtpl->assign('NV_BASE_ADMINURL', NV_BASE_ADMINURL);
-$xtpl->assign('NV_NAME_VARIABLE', NV_NAME_VARIABLE);
-$xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
+$xtpl->assign('SORT', $sort);
+$xtpl->assign('SORT_TOGGLE', ($sort === 'ASC') ? 'DESC' : 'ASC');
+$xtpl->assign('SORT_ASC_SELECTED', ($sort === 'ASC') ? 'selected="selected"' : '');
+$xtpl->assign('SORT_DESC_SELECTED', ($sort === 'DESC') ? 'selected="selected"' : '');
 $xtpl->assign('ADD_BOOK_URL', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_add');
 
 foreach ($categories as $id => $title) {
@@ -109,7 +113,7 @@ if (!empty($rows)) {
 
 $generate_page = '';
 if ($list['total'] > $per_page) {
-    $page_url = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main&amp;search=' . urlencode($search) . '&amp;cat_id=' . $cat_id . '&amp;status=' . $status;
+    $page_url = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main&amp;search=' . urlencode($search) . '&amp;cat_id=' . $cat_id . '&amp;status=' . $status . '&amp;sort=' . $sort;
     $generate_page = nv_generate_page($page_url, $list['total'], $per_page, $page);
 }
 if (!empty($generate_page)) {
