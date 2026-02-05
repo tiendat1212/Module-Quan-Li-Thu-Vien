@@ -14,7 +14,7 @@ if (!defined('NV_ADMIN')) {
 }
 
 $menu_sub = [];
-$menu_sub['books'] = $nv_Lang->getModule('books_manager');
+$menu_sub['main'] = $nv_Lang->getModule('books_manager');
 $menu_sub['book_add'] = $nv_Lang->getModule('book_add');
 $menu_sub['book_edit'] = $nv_Lang->getModule('book_edit');
 
