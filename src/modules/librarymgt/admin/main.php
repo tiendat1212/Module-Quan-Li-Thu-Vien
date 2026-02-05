@@ -29,7 +29,7 @@ $checkss = $nv_Request->get_title('checkss', 'get', '');
 
 if ($op_delete === 'delete' && $book_id > 0) {
     if ($checkss === md5($book_id . NV_CHECK_SESSION)) {
-        $delete_result = nv_delete_book($book_id);
+        $delete_result = nv_admin_delete_book($book_id);
         if ($delete_result['success']) {
             nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
         }
@@ -45,8 +45,8 @@ if ($status >= 0) {
     $filters['status'] = $status;
 }
 
-$list = nv_get_books_list($page, $per_page, $filters);
-$categories = nv_get_categories_list(false);
+$list = nv_admin_get_books_list($page, $per_page, $filters);
+$categories = nv_admin_get_categories_list(false);
 
 $rows = [];
 foreach ($list['books'] as $row) {

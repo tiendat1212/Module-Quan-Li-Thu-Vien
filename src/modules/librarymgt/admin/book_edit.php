@@ -21,7 +21,7 @@ if ($book_id <= 0) {
 }
 
 if ($book_id <= 0) {
-    $list = nv_get_books_list(1, 200, ['sort' => 'ASC']);
+    $list = nv_admin_get_books_list(1, 200, ['sort' => 'ASC']);
 
     [$template, $dir] = get_module_tpl_dir('book_edit.tpl', true);
     $xtpl = new XTemplate('book_edit.tpl', $dir);
@@ -55,8 +55,8 @@ if ($book_id <= 0) {
     exit();
 }
 
-$categories = nv_get_categories_list(false);
-$book = nv_get_book($book_id);
+$categories = nv_admin_get_categories_list(false);
+$book = nv_admin_get_book($book_id);
 
 if (empty($book)) {
     nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
@@ -112,7 +112,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
 
     if (empty($errors)) {
-        $result = nv_update_book($book_id, $data);
+        $result = nv_admin_update_book($book_id, $data);
         if (!empty($result['success'])) {
             nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
         }
@@ -123,7 +123,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
 }
 
-$data = nv_normalize_book_template_data($data);
+$data = nv_admin_normalize_book_template_data($data);
 
 [$template, $dir] = get_module_tpl_dir('book_edit.tpl', true);
 $xtpl = new XTemplate('book_edit.tpl', $dir);
