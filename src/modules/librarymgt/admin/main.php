@@ -59,7 +59,7 @@ foreach ($list['books'] as $row) {
         'status_text' => $row['status'] ? $nv_Lang->getModule('status_active') : $nv_Lang->getModule('status_inactive'),
         'status_class' => $row['status'] ? 'success' : 'danger',
         'add_date' => nv_date('d/m/Y', $row['add_time']),
-        'edit_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_edit&amp;id=' . $row['id'],
+        'edit_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_edit&amp;book_id=' . $row['id'],
         'delete_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main&amp;op_delete=delete&amp;book_id=' . $row['id'] . '&amp;checkss=' . md5($row['id'] . NV_CHECK_SESSION)
     ];
 }
