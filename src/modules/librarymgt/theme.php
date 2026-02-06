@@ -38,22 +38,30 @@ function nv_theme_books_list($books, $categories, $current_catid, $generate_page
         $xtpl->parse('main.borrowed_link');
     }
 
-    if (!empty($books)) {
-        foreach ($books as $row) {
-            $xtpl->assign('ROW', $row);
-            $xtpl->parse('main.loop');
+if (!empty($books)) {
+    foreach ($books as $row) {
+        $xtpl->assign('ROW', $row);
+
+        if (!empty($row['image'])) {
+            $xtpl->parse('main.has_books.loop.has_image');
+        } else {
+            $xtpl->parse('main.has_books.loop.no_image');
         }
 
-        if (!empty($generate_page)) {
-            $xtpl->assign('GENERATE_PAGE', $generate_page);
-            $xtpl->parse('main.gp');
-        }
-    } else {
-        $xtpl->parse('main.empty');
+        $xtpl->parse('main.has_books.loop');
     }
+
+    if (!empty($generate_page)) {
+        $xtpl->assign('GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.gp');
+    }
+
+    $xtpl->parse('main.has_books');
+} else {
+    $xtpl->parse('main.empty');
+}
+
 
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
-
-

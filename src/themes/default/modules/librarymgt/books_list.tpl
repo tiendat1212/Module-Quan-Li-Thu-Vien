@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
 <div class="librarymgt">
-    <h1>{PAGE_TITLE}</h1>
+    <h1 class="page-header">{PAGE_TITLE}</h1>
 
     <div class="librarymgt-cats">
         <a href="{URL_ALL}" class="btn btn-default">Tất cả</a>
@@ -17,39 +17,46 @@
         <div class="clearfix"></div>
     </div>
 
-    <hr />
-
     <!-- BEGIN: empty -->
     <div class="alert alert-info">Chưa có sách.</div>
     <!-- END: empty -->
 
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th style="width:60px">ID</th>
-                <th>Tên sách</th>
-                <th style="width:220px">Tác giả</th>
-                <th style="width:220px">Thể loại</th>
-                <th style="width:120px">Số lượng</th>
-                <th style="width:140px">Ngày thêm</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- BEGIN: loop -->
-            <tr>
-                <td>{ROW.id}</td>
-                <td>{ROW.title}</td>
-                <td>{ROW.author}</td>
-                <td>{ROW.name}</td>
-                <td>{ROW.quantity}</td>
-                <td>{ROW.add_time}</td>
-            </tr>
-            <!-- END: loop -->
-        </tbody>
-    </table>
+    <!-- BEGIN: has_books -->
+    <div class="row librarymgt-grid">
+        <!-- BEGIN: loop -->
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="panel panel-default book-card">
+                <div class="book-cover">
+                    <!-- BEGIN: has_image -->
+                    <img src="{ROW.image}" alt="{ROW.title}">
+                    <!-- END: has_image -->
+
+                    <!-- BEGIN: no_image -->
+                    <div class="no-cover"><span>No Cover</span></div>
+                    <!-- END: no_image -->
+                </div>
+
+                <div class="book-info">
+                    <h4 class="book-title" title="{ROW.title}">{ROW.title}</h4>
+
+                    <div class="book-meta">
+                        <div><span class="book-label">Tác giả:</span> {ROW.author}</div>
+                        <div><span class="book-label">Thể loại:</span> {ROW.name}</div>
+                    </div>
+                </div>
+
+                <div class="book-footer">
+                    <span class="label label-info">SL: {ROW.quantity}</span>
+                    <small class="text-muted">{ROW.add_time}</small>
+                </div>
+            </div>
+        </div>
+        <!-- END: loop -->
+    </div>
 
     <!-- BEGIN: gp -->
     <div class="text-center">{GENERATE_PAGE}</div>
     <!-- END: gp -->
+    <!-- END: has_books -->
 </div>
 <!-- END: main -->
