@@ -40,9 +40,18 @@ function nv_theme_books_list($books, $categories, $current_catid, $generate_page
 
     if (!empty($books)) {
         foreach ($books as $row) {
-            $xtpl->assign('ROW', $row);
-            $xtpl->parse('main.loop');
-        }
+    $xtpl->assign('ROW', $row);
+
+    if (!empty($row['image'])) {
+        $xtpl->parse('main.has_books.loop.has_image');
+    } else {
+        $xtpl->parse('main.has_books.loop.no_image');
+    }
+
+    $xtpl->parse('main.has_books.loop');
+}
+$xtpl->parse('main.has_books');
+
 
         if (!empty($generate_page)) {
             $xtpl->assign('GENERATE_PAGE', $generate_page);
@@ -55,5 +64,3 @@ function nv_theme_books_list($books, $categories, $current_catid, $generate_page
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
-
-
