@@ -37,7 +37,7 @@ $num_items = (int) $db->query('SELECT COUNT(*) FROM ' . $tb_books . ' WHERE stat
 
 //Lấy danh sách sách (join thể loại)
 $books = [];
-$sql = 'SELECT b.id, b.title, b.author, b.quantity, b.add_time, c.title AS name
+$sql = 'SELECT b.id, b.title, b.author, b.quantity, b.add_time, b.image, c.title AS name
         FROM ' . $tb_books . ' b
         LEFT JOIN ' . $tb_categories . ' c ON c.id = b.cat_id
         WHERE b.status = 1
