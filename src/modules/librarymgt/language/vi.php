@@ -23,4 +23,4 @@ $lang_module['menu_manager'] = 'Module Libraby';
 $lang_module['add_new'] = 'Thêm sách';
 $lang_module['config'] = 'Cấu hình';
 $lang_module['library_manager'] = 'Quản lý module library';
-$lang_module['borrows'] = 'Quản lý mượn trả';
+$lang_module['borrows_manager'] = 'Quản lý mượn trả';
