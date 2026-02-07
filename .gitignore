@@ -108,3 +108,4 @@
 # Ignore documentation files
 *.docx
 *.doc
+*.htaccess
