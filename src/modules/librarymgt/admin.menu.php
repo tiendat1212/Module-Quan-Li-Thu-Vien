@@ -14,18 +14,11 @@ if (!defined('NV_ADMIN')) {
 }
 
 $menu_sub = [];
-$menu_sub['add_new'] = $nv_Lang->getModule('add_new');
-$menu_sub['config'] = $nv_Lang->getModule('config');
-$submenu['type'] = $nv_Lang->getModule('theloai');
+$menu_sub['main'] = $nv_Lang->getModule('books_manager');
+$menu_sub['book_add'] = $nv_Lang->getModule('book_add');
+$menu_sub['book_edit'] = $nv_Lang->getModule('book_edit');
+
 $submenu['main'] = [
     'title' => $nv_Lang->getModule('library_manager'),
     'submenu' => $menu_sub
-];
-
-$menu_sub_2 = [];
-$menu_sub_2['add_new_2'] = $nv_Lang->getModule('add_new');
-$menu_sub_2['config_2'] = $nv_Lang->getModule('config');
-$submenu['sach'] = [
-    'title' => $nv_Lang->getModule('library_manager_2'),
-    'submenu' => $menu_sub_2
 ];

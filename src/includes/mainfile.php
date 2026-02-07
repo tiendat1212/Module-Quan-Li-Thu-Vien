@@ -14,12 +14,7 @@ if (!defined('NV_SYSTEM') and !defined('NV_ADMIN') and !defined('NV_WYSIWYG')) {
     exit();
 }
 
-// Temporarily enable full error reporting for local debugging. Revert this change when finished.
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-
-// Do not force-define NV_DEBUG here to avoid colliding with config_global.php.
+error_reporting(0);
 
 define('NV_MAINFILE', true);
 

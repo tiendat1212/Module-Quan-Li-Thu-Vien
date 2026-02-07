@@ -1,0 +1,260 @@
+.librarymgt .librarymgt-cats .btn { margin: 0 6px 10px 0; }
+.librarymgt .librarymgt-cats .btn.pull-right { margin-right: 0; }
+
+.librarymgt .librarymgt-grid { margin-left: -10px; margin-right: -10px; }
+.librarymgt .librarymgt-grid > [class*="col-"] { padding-left: 10px; padding-right: 10px; }
+
+.book-card{
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.book-cover{
+  width: 100%;
+  height: 200px;     
+  background: #f6f7f8;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-cover img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   
+}
+
+
+.no-cover{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#8a8a8a;
+  font-size:13px;
+}
+
+.book-info{
+  flex: 1;
+  padding: 10px 12px;
+}
+
+.book-title{
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 40px;
+
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.book-meta{
+  font-size: 13px;
+  color:#555;
+}
+
+.book-meta > div{ margin-bottom: 4px; }
+
+.book-label{
+  color:#777;
+  font-weight: 700;
+}
+
+.book-footer{
+  padding: 8px 12px;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  background:#fafafa;
+  border-top: 1px solid #eee;
+}
+
+/* Container tổng thể trang chi tiết */
+.librarymgt.book-detail {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Tránh overflow và các cột nằm cạnh nhau */
+.librarymgt.book-detail .row {
+    margin-left: -15px;
+    margin-right: -15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; /* FIX: Căn đầu các cột, không stretch */
+}
+
+/* Cột ảnh bìa */
+.librarymgt.book-detail .col-md-4,
+.librarymgt.book-detail .col-sm-5 {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+}
+
+/* Cột thông tin */
+.librarymgt.book-detail .col-md-8,
+.librarymgt.book-detail .col-sm-7 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Container bao ngoài ảnh bìa  */
+.librarymgt .book-detail-cover {
+    width: 100% !important;
+    max-width: 250px !important;
+    min-height: 375px !important; 
+    height: auto !important;
+    aspect-ratio: 2 / 3; 
+    margin: 0 auto 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+    overflow: hidden;
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ảnh bìa thật */
+.librarymgt .book-detail-cover img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    position: absolute; 
+    top: 0;
+    left: 0;
+}
+
+/* Khung "No Cover" */
+.librarymgt .no-cover-large {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #eee;
+    color: #888;
+    font-size: 14px;
+    line-height: normal;
+    position: absolute; 
+    top: 0;
+    left: 0;
+}
+
+/* Container thông tin sách */
+.librarymgt .book-detail-info {
+    width: 100%;
+    display: block;
+    clear: both;
+}
+
+/* Bảng thông tin */
+.librarymgt .book-detail-info .table {
+    margin-bottom: 20px;
+    width: 100%;
+    table-layout: auto;
+}
+
+.librarymgt .book-detail-info .table th {
+    background: #fdfdfd;
+    width: 35%; 
+    white-space: nowrap;
+    padding: 10px;
+    font-weight: 600;
+    color: #333;
+}
+
+.librarymgt .book-detail-info .table td {
+    vertical-align: middle;
+    font-size: 15px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+/* Phần mô tả */
+.librarymgt .book-description {
+    margin-top: 25px;
+    border-top: 2px solid #337ab7;
+    padding-top: 15px;
+}
+
+.librarymgt .book-description h3 {
+    font-size: 18px;
+    color: #337ab7;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.librarymgt .book-description p {
+    line-height: 1.7;
+    color: #444;
+    text-align: justify;
+    font-size: 14px;
+}
+
+/* Phần nút hành động */
+.librarymgt .book-actions {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Page header */
+.librarymgt.book-detail .page-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #337ab7;
+}
+
+.librarymgt.book-detail .page-header h1 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Container tổng thể trang chính */
+
+.librarymgt .book-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.librarymgt .book-card-link:hover, 
+.librarymgt .book-card-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Hiệu ứng hover cho thẻ card */
+.librarymgt .book-card {
+    transition: all 0.3s ease;
+}
+
+.librarymgt .book-card-link:hover .book-card {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+    border-color: #337ab7; 
+}
