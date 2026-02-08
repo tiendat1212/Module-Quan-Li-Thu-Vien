@@ -40,6 +40,234 @@ function borrows_manager_status_info($status) {
 
 function borrows_manager_can_approve($status) {
     return $status == BORROW_PENDING;
+$allow_func = array('main', 'books', 'book_add', 'book_edit', 'book_delete', 'api');
+define('NV_IS_FILE_ADMIN', true);
+
+if (!function_exists('nv_librarymgt_get_books_list')) {
+    require_once NV_ROOTDIR . '/modules/' . $GLOBALS['module_file'] . '/functions.php';
+}
+
+//Lấy danh sách sách với phân trang, lọc
+
+function nv_admin_get_books_list($page = 1, $per_page = 10, $filters = [])
+{
+    return nv_librarymgt_get_books_list($page, $per_page, $filters);
+}
+
+//Lấy chi tiết 1 cuốn sách
+
+function nv_admin_get_book($book_id)
+{
+    return nv_librarymgt_get_book($book_id);
+}
+
+// Lấy danh sách thể loại
+function nv_admin_get_categories_list($only_active = true)
+{
+    return nv_librarymgt_get_categories_list($only_active);
+}
+
+
+// Chuẩn hóa dữ liệu sách trả về template
+function nv_admin_normalize_book_template_data(array $data)
+{
+    $publish_year = isset($data['publish_year']) ? (int) $data['publish_year'] : 0;
+    $quantity = isset($data['quantity']) ? (int) $data['quantity'] : 0;
+
+    return [
+        'title' => isset($data['title']) ? trim((string) $data['title']) : '',
+        'author' => isset($data['author']) ? trim((string) $data['author']) : '',
+        'cat_id' => isset($data['cat_id']) ? (int) $data['cat_id'] : 0,
+        'publisher' => isset($data['publisher']) ? trim((string) $data['publisher']) : '',
+        'publish_year' => $publish_year > 0 ? (string) $publish_year : '',
+        'isbn' => isset($data['isbn']) ? trim((string) $data['isbn']) : '',
+        'quantity' => $quantity > 0 ? (string) $quantity : '',
+        'image' => isset($data['image']) ? trim((string) $data['image']) : '',
+        'description' => isset($data['description']) ? trim((string) $data['description']) : '',
+        'status' => isset($data['status']) ? (int) $data['status'] : 1
+    ];
+}
+
+
+// Validate dữ liệu sách
+
+function nv_admin_validate_book($data)
+{
+    $errors = [];
+
+    if (empty($data['title'])) {
+        $errors['title'] = 'Tiêu đề không được để trống';
+    }
+
+    if (empty($data['author'])) {
+        $errors['author'] = 'Tác giả không được để trống';
+    }
+
+    if (empty($data['cat_id']) || (int) $data['cat_id'] <= 0) {
+        $errors['cat_id'] = 'Thể loại không hợp lệ';
+    }
+
+    $quantity = isset($data['quantity']) ? (int) $data['quantity'] : 0;
+    if ($quantity <= 0) {
+        $errors['quantity'] = 'Số lượng phải lớn hơn 0';
+    }
+
+    return $errors;
+}
+
+// Tạo alias từ tiêu đề
+function nv_admin_create_alias($title)
+{
+    $alias = nv_url_rewrite($title);
+    return $alias;
+}
+
+//Thêm sách mới
+
+function nv_admin_insert_book($data)
+{
+    global $db;
+    
+    // Validate
+    $errors = nv_admin_validate_book($data);
+    if (!empty($errors)) {
+        return ['success' => false, 'errors' => $errors];
+    }
+
+    $tb_books = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_books';
+    $tb_categories = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_categories';
+
+    // Kiểm tra thể loại tồn tại
+    $cat_id = (int) $data['cat_id'];
+    $result = $db->query('SELECT id FROM ' . $tb_categories . ' WHERE id = ' . $cat_id);
+    if (!$result->fetch(PDO::FETCH_ASSOC)) {
+        return ['success' => false, 'errors' => ['cat_id' => 'Thể loại không tồn tại']];
+    }
+
+    // Tạo alias
+    $alias = nv_admin_create_alias($data['title']);
+    
+    // Kiểm tra alias đã tồn tại
+    $result = $db->query('SELECT id FROM ' . $tb_books . ' WHERE alias = ' . $db->quote($alias));
+    if ($result->fetch(PDO::FETCH_ASSOC)) {
+        $alias = $alias . '-' . time();
+    }
+
+        $title = $db->quote($data['title']);
+        $author = $db->quote($data['author']);
+        $publisher = isset($data['publisher']) ? $db->quote($data['publisher']) : $db->quote('');
+        $isbn = isset($data['isbn']) ? $db->quote($data['isbn']) : $db->quote('');
+    $publish_year = isset($data['publish_year']) ? (int) $data['publish_year'] : 0;
+        $description = isset($data['description']) ? $db->quote($data['description']) : $db->quote('');
+        $image = isset($data['image']) ? $db->quote($data['image']) : $db->quote('');
+    $quantity = (int) $data['quantity'];
+    $status = isset($data['status']) ? (int) $data['status'] : 1;
+    $now = time();
+
+    $sql = 'INSERT INTO ' . $tb_books . ' (cat_id, title, alias, author, publisher, publish_year, isbn, quantity, description, image, status, add_time, edit_time)
+            VALUES (' . $cat_id . ', ' . $title . ', ' . $db->quote($alias) . ', ' . $author . ', ' . $publisher . ', ' . $publish_year . ', ' . $isbn . ', ' . $quantity . ', ' . $description . ', ' . $image . ', ' . $status . ', ' . $now . ', ' . $now . ')';
+
+    if ($db->query($sql)) {
+        return ['success' => true, 'id' => $db->insert_id, 'alias' => $alias];
+    }
+
+    return ['success' => false, 'errors' => ['db' => 'Lỗi thêm sách: ' . $db->error]];
+}
+
+
+//Cập nhật sách
+
+function nv_admin_update_book($book_id, $data)
+{
+    global $db;
+    
+    $book_id = (int) $book_id;
+    
+    // Validate
+    $errors = nv_admin_validate_book($data);
+    if (!empty($errors)) {
+        return ['success' => false, 'errors' => $errors];
+    }
+
+    $tb_books = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_books';
+    $tb_categories = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_categories';
+
+    // Kiểm tra sách tồn tại
+    $book = nv_admin_get_book($book_id);
+    if (!$book) {
+        return ['success' => false, 'errors' => ['id' => 'Sách không tồn tại']];
+    }
+
+    // Kiểm tra thể loại tồn tại
+    $cat_id = (int) $data['cat_id'];
+    $result = $db->query('SELECT id FROM ' . $tb_categories . ' WHERE id = ' . $cat_id);
+    if (!$result->fetch(PDO::FETCH_ASSOC)) {
+        return ['success' => false, 'errors' => ['cat_id' => 'Thể loại không tồn tại']];
+    }
+
+    $title = $db->quote($data['title']);
+    $author = $db->quote($data['author']);
+    $publisher = isset($data['publisher']) ? $db->quote($data['publisher']) : $db->quote('');
+    $isbn = isset($data['isbn']) ? $db->quote($data['isbn']) : $db->quote('');
+    $publish_year = isset($data['publish_year']) ? (int) $data['publish_year'] : 0;
+    $description = isset($data['description']) ? $db->quote($data['description']) : $db->quote('');
+    $image = isset($data['image']) ? $db->quote($data['image']) : $db->quote($book['image']);
+    $quantity = (int) $data['quantity'];
+    $status = isset($data['status']) ? (int) $data['status'] : 1;
+    $now = time();
+
+    $sql = 'UPDATE ' . $tb_books . ' SET
+            cat_id = ' . $cat_id . ',
+            title = ' . $title . ',
+            author = ' . $author . ',
+            publisher = ' . $publisher . ',
+            publish_year = ' . $publish_year . ',
+            isbn = ' . $isbn . ',
+            quantity = ' . $quantity . ',
+            description = ' . $description . ',
+            image = ' . $image . ',
+            status = ' . $status . ',
+            edit_time = ' . $now . '
+            WHERE id = ' . $book_id;
+
+    if ($db->query($sql)) {
+        return ['success' => true, 'id' => $book_id];
+    }
+
+    return ['success' => false, 'errors' => ['db' => 'Lỗi cập nhật sách: ' . $db->error]];
+}
+
+
+// Xóa sách
+
+function nv_admin_delete_book($book_id)
+{
+    global $db;
+    
+    $book_id = (int) $book_id;
+    $tb_books = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_books';
+    $tb_borrows = NV_PREFIXLANG . '_' . $GLOBALS['module_data'] . '_borrows';
+
+    // Kiểm tra sách tồn tại
+    $book = nv_admin_get_book($book_id);
+    if (!$book) {
+        return ['success' => false, 'error' => 'Sách không tồn tại'];
+    }
+
+    // Kiểm tra có bản ghi mượn liên quan
+    $result = $db->query('SELECT COUNT(*) as count FROM ' . $tb_borrows . ' WHERE book_id = ' . $book_id . ' AND status IN (0, 1, 4)');
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    if ($row['count'] > 0) {
+        return ['success' => false, 'error' => 'Không thể xóa sách có bản ghi mượn đang hoạt động'];
+    }
+
+    // Xóa sách
+    $sql = 'DELETE FROM ' . $tb_books . ' WHERE id = ' . $book_id;
+    if ($db->query($sql)) {
+        return ['success' => true];
+    }
+
+    return ['success' => false, 'error' => 'Lỗi xóa sách: ' . $db->error];
 }
 
 function borrows_manager_can_cancel($status) {
