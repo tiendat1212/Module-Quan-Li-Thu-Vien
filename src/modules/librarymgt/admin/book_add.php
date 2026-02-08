@@ -44,11 +44,16 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $data['status'] = $nv_Request->get_int('status', 'post', 1);
 
     if (isset($_FILES['image_file']) and is_uploaded_file($_FILES['image_file']['tmp_name'])) {
+        $upload_dir = NV_UPLOADS_REAL_DIR . '/' . $module_upload;
+        if (!is_dir($upload_dir)) {
+            @mkdir($upload_dir, 0755, true);
+        }
         $upload = new NukeViet\Files\Upload([
             'jpg', 'jpeg', 'png', 'gif', 'webp'
         ], $global_config['forbid_extensions'], $global_config['forbid_mimes'], NV_UPLOAD_MAX_FILESIZE, NV_MAX_WIDTH, NV_MAX_HEIGHT);
         $upload->setLanguage(\NukeViet\Core\Language::$lang_global);
-        $upload_info = $upload->save_file($_FILES['image_file'], NV_UPLOADS_REAL_DIR . '/' . $module_upload, false);
+        //$upload_info = $upload->save_file($_FILES['image_file'], NV_UPLOADS_REAL_DIR . '/' . $module_upload, false);
+        $upload_info = $upload->save_file($_FILES['image_file'], $upload_dir, false);
         @unlink($_FILES['image_file']['tmp_name']);
 
         if (!empty($upload_info['error'])) {
