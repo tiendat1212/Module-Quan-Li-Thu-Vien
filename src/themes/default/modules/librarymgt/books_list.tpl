@@ -45,7 +45,7 @@
     <!-- BEGIN: has_books -->
     <div class="row librarymgt-grid">
         <!-- BEGIN: loop -->
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-xs-24 col-sm-12 col-md-6 col-lg-6">
             <a href="{ROW.detail_link}" class="book-card-link">
                 <div class="panel panel-default book-card">
                     <div class="book-cover">
@@ -69,9 +69,9 @@
 
                     <div class="book-footer">
                         <span class="label label-info">SL: {ROW.quantity}</span>
-                        <small class="text-muted">{ROW.add_time}</small>
-                        <span class="pull-right text-primary">
-                            <small>Xem chi tiết <i class="fa fa-arrow-right"></i></small>
+                        <span class="text-muted">{ROW.add_time}</span>
+                        <span class="text-primary">
+                            Xem <i class="fa fa-arrow-right"></i>
                         </span>
                     </div>
                 </div>

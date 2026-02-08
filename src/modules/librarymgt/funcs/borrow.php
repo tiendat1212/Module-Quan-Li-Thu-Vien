@@ -39,10 +39,10 @@ if ($nv_Request->isset_request('save', 'post')) {
         $book = $db->query($sql)->fetch();
         
         if (!empty($book)) {
-            // Kiểm tra user có yêu cầu đang chờ hoặc sách chưa trả không
+            // Kiểm tra user có yêu cầu đang chờ hoặc sách chưa trả không (fix)
             $sql_check = 'SELECT COUNT(*) FROM ' . $tb_borrow . ' 
                           WHERE user_id = ' . $user_info['userid'] . ' 
-                          AND status IN (0, 1, 2)'; // 0: chờ duyệt, 1: đang mượn, 2: quá hạn
+                          AND status IN (0, 1, 4)'; // 0: chờ duyệt, 1: đang mượn, 4: quá hạn
             
             $has_pending = (int) $db->query($sql_check)->fetchColumn();
             
@@ -58,8 +58,8 @@ if ($nv_Request->isset_request('save', 'post')) {
                 
                 $stmt->bindParam(':userid', $user_info['userid'], PDO::PARAM_INT);
                 $stmt->bindParam(':book_id', $book_id, PDO::PARAM_INT);
-                $request_time = NV_CURRENTTIME;
-                $stmt->bindParam(':request_date', $request_time, PDO::PARAM_INT);
+                $request_time = date('Y-m-d H:i:s', NV_CURRENTTIME);
+                $stmt->bindParam(':request_date', $request_time, PDO::PARAM_STR);
                 
                 if ($stmt->execute()) {
                     $return['status'] = 'success';

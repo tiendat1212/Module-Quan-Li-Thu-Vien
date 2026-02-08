@@ -40,10 +40,10 @@ $can_borrow = false;
 $borrow_disabled_reason = '';
 
 if (defined('NV_IS_USER')) {
-    // Kiểm tra xem user có sách đang mượn hoặc quá hạn chưa trả không
+    // Kiểm tra xem user có sách đang mượn hoặc quá hạn chưa trả không (fix)  
     $sql_check = 'SELECT COUNT(*) FROM ' . $tb_borrow . ' 
                   WHERE user_id = ' . $user_info['userid'] . ' 
-                  AND status IN (0, 1, 2)'; // 0: chờ duyệt, 1: đang mượn, 2: quá hạn
+                  AND status IN (0, 1, 4)'; // 0: chờ duyệt, 1: đang mượn, 4: quá hạn
     
     $has_pending = (int) $db->query($sql_check)->fetchColumn();
     

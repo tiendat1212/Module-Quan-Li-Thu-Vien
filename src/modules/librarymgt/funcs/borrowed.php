@@ -39,8 +39,8 @@ if ($nv_Request->isset_request('cancel', 'post')) {
         $borrow = $db->query($sql)->fetch();
         
         if (!empty($borrow)) {
-            // Cập nhật trạng thái thành "đã hủy" (status = 4)
-            $stmt = $db->prepare('UPDATE ' . $tb_borrow . ' SET status = 4 WHERE id = :id');
+            // Cập nhật trạng thái thành "đã hủy" (status = 3)
+            $stmt = $db->prepare('UPDATE ' . $tb_borrow . ' SET status = 3 WHERE id = :id');
             $stmt->bindParam(':id', $borrow_id, PDO::PARAM_INT);
             
             if ($stmt->execute()) {
@@ -89,38 +89,28 @@ while ($row = $result->fetch()) {
     $status_class = '';
     $can_cancel = false;
     
+    // Sửa đoạn Switch trong borrowed.php để đồng bộ với định nghĩa trạng thái trong borrowed.php
     switch ((int) $row['status']) {
-        case 0: // Chờ duyệt
-            $status_text = 'Chờ duyệt';
-            $status_class = 'warning';
-            $can_cancel = true;
-            break;
-        case 1: // Đang mượn
-            $status_text = 'Đang mượn';
-            $status_class = 'success';
-            break;
-        case 2: // Quá hạn
-            $status_text = 'Quá hạn';
-            $status_class = 'danger';
-            break;
-        case 3: // Đã trả
-            $status_text = 'Đã trả';
-            $status_class = 'default';
-            break;
-        case 4: // Đã hủy
-            $status_text = 'Đã hủy';
-            $status_class = 'default';
-            break;
+        case 0: 
+            $status_text = 'Chờ duyệt'; $status_class = 'warning'; $can_cancel = true; break;
+        case 1: 
+            $status_text = 'Đang mượn'; $status_class = 'info'; break;
+        case 2: // File Admin định nghĩa 2 là RETURNED
+            $status_text = 'Đã trả'; $status_class = 'success'; break;
+        case 3: // File Admin định nghĩa 3 là CANCELED
+            $status_text = 'Đã hủy'; $status_class = 'default'; break;
+        case 4: // File Admin định nghĩa 4 là OVERDUE
+            $status_text = 'Quá hạn'; $status_class = 'danger'; break;
     }
     
     $row['stt'] = $stt;
     $row['status_text'] = $status_text;
     $row['status_class'] = $status_class;
     $row['can_cancel'] = $can_cancel;
-    $row['request_time_formatted'] = nv_date('d/m/Y H:i', (int) $row['request_date']);
-    $row['borrow_date_formatted'] = !empty($row['borrow_date']) ? nv_date('d/m/Y', (int) $row['borrow_date']) : '';
-    $row['return_date_formatted'] = !empty($row['return_date']) ? nv_date('d/m/Y', (int) $row['return_date']) : '';
-    $row['due_date_formatted'] = !empty($row['due_date']) ? nv_date('d/m/Y', (int) $row['due_date']) : '';
+    $row['request_time_formatted'] = ($row['request_date'] != '0000-00-00 00:00:00') ? nv_date('d/m/Y H:i', strtotime($row['request_date'])) : '-';
+    $row['borrow_date_formatted']  = ($row['borrow_date'] > 0) ? nv_date('d/m/Y', strtotime($row['borrow_date'])) : '-';
+    $row['due_date_formatted']     = ($row['due_date'] > 0) ? nv_date('d/m/Y', strtotime($row['due_date'])) : '-';
+    $row['return_date_formatted']  = ($row['return_date'] > 0) ? nv_date('d/m/Y', strtotime($row['return_date'])) : '-';
     $row['has_image'] = !empty($row['image']);
     
     $borrow_list[] = $row;
