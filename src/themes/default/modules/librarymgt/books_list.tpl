@@ -12,7 +12,9 @@
         <!-- END: cat_loop -->
 
         <!-- BEGIN: borrowed_link -->
-        <a href="{URL_BORROWED}" class="btn btn-primary pull-right">Sách đã mượn</a>
+        <a href="{URL_BORROWED}" class="btn btn-primary pull-right">
+            <i class="fa fa-history"></i> Lịch sử mượn sách
+        </a>
         <!-- END: borrowed_link -->
         <div class="clearfix"></div>
     </div>
@@ -25,31 +27,36 @@
     <div class="row librarymgt-grid">
         <!-- BEGIN: loop -->
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="panel panel-default book-card">
-                <div class="book-cover">
-                    <!-- BEGIN: has_image -->
-                    <img src="{ROW.image}" alt="{ROW.title}">
-                    <!-- END: has_image -->
+            <a href="{ROW.detail_link}" class="book-card-link">
+                <div class="panel panel-default book-card">
+                    <div class="book-cover">
+                        <!-- BEGIN: has_image -->
+                        <img src="{ROW.image}" alt="{ROW.title}">
+                        <!-- END: has_image -->
 
-                    <!-- BEGIN: no_image -->
-                    <div class="no-cover"><span>No Cover</span></div>
-                    <!-- END: no_image -->
-                </div>
+                        <!-- BEGIN: no_image -->
+                        <div class="no-cover"><span>No Cover</span></div>
+                        <!-- END: no_image -->
+                    </div>
 
-                <div class="book-info">
-                    <h4 class="book-title" title="{ROW.title}">{ROW.title}</h4>
+                    <div class="book-info">
+                        <h4 class="book-title" title="{ROW.title}">{ROW.title}</h4>
 
-                    <div class="book-meta">
-                        <div><span class="book-label">Tác giả:</span> {ROW.author}</div>
-                        <div><span class="book-label">Thể loại:</span> {ROW.name}</div>
+                        <div class="book-meta">
+                            <div><span class="book-label">Tác giả:</span> {ROW.author}</div>
+                            <div><span class="book-label">Thể loại:</span> {ROW.name}</div>
+                        </div>
+                    </div>
+
+                    <div class="book-footer">
+                        <span class="label label-info">SL: {ROW.quantity}</span>
+                        <small class="text-muted">{ROW.add_time}</small>
+                        <span class="pull-right text-primary">
+                            <small>Xem chi tiết <i class="fa fa-arrow-right"></i></small>
+                        </span>
                     </div>
                 </div>
-
-                <div class="book-footer">
-                    <span class="label label-info">SL: {ROW.quantity}</span>
-                    <small class="text-muted">{ROW.add_time}</small>
-                </div>
-            </div>
+            </a>
         </div>
         <!-- END: loop -->
     </div>
@@ -59,4 +66,4 @@
     <!-- END: gp -->
     <!-- END: has_books -->
 </div>
-<!-- END: main -->
+

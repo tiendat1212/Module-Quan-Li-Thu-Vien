@@ -48,6 +48,7 @@ $result = $db->query($sql);
 while ($row = $result->fetch()) {
     $row['name'] = $row['name'] ?? '';
     $row['add_time'] = !empty($row['add_time']) ? nv_date('d/m/Y', (int) $row['add_time']) : '';
+    $row['detail_link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=detail&id=' . (int) $row['id'];
     $books[] = $row;
 }
 
