@@ -14,23 +14,10 @@ if (!defined('NV_ADMIN')) {
 }
 
 $menu_sub = [];
-$menu_sub['add_new'] = $nv_Lang->getModule('add_new');
-$menu_sub['config'] = $nv_Lang->getModule('config');
 $submenu['cat'] = $nv_Lang->getModule('Quản lý thể loại');
 $submenu['borrows'] = $nv_Lang->getModule('Quản lý mượn trả');
-$submenu['main'] = [
-    'title' => $nv_Lang->getModule('library_manager'),
-    'submenu' => $menu_sub
-];
 
 
 
-$menu_sub_2 = [];
-$menu_sub_2['add_new_2'] = $nv_Lang->getModule('add_new');
-$menu_sub_2['config_2'] = $nv_Lang->getModule('config');
-$submenu['sach'] = [
-    'title' => $nv_Lang->getModule('library_manager_2'),
-    'submenu' => $menu_sub_2
-];
 
 
