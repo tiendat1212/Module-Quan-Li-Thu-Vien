@@ -15,7 +15,7 @@ if (!defined('NV_IS_FILE_ADMIN')) {
 
 $page_title = $nv_Lang->getModule('book_edit');
 
-$book_id = $nv_Request->get_int('book_id', 'get', 0);
+$book_id = $nv_Request->get_int('book_id', 'post,get', 0);
 if ($book_id <= 0) {
     $book_id = $nv_Request->get_int('id', 'get', 0);
 }

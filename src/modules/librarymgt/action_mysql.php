@@ -57,7 +57,7 @@ $sql_create_module[] = 'CREATE TABLE ' . NV_PREFIXLANG . '_' . $module_data . "_
   KEY idx_quantity (quantity)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 
-// Borrows (use system user_id)
+// Borrows 
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . NV_PREFIXLANG . '_' . $module_data . '_borrows';
 
 $sql_create_module[] = 'CREATE TABLE ' . NV_PREFIXLANG . '_' . $module_data . "_borrows (

@@ -52,7 +52,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
             'jpg', 'jpeg', 'png', 'gif', 'webp'
         ], $global_config['forbid_extensions'], $global_config['forbid_mimes'], NV_UPLOAD_MAX_FILESIZE, NV_MAX_WIDTH, NV_MAX_HEIGHT);
         $upload->setLanguage(\NukeViet\Core\Language::$lang_global);
-        $upload_info = $upload->save_file($_FILES['image_file'], $upload_dir, false);
+        $upload_info = $upload->save_file($_FILES['image_file'], NV_UPLOADS_REAL_DIR . '/' . $module_upload, false);
         @unlink($_FILES['image_file']['tmp_name']);
 
         if (!empty($upload_info['error'])) {
