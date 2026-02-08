@@ -2,6 +2,7 @@
 <div class="librarymgt">
     <h1 class="page-header">{PAGE_TITLE}</h1>
 
+    <!-- ===== Bộ lọc thể loại ===== -->
     <div class="librarymgt-cats">
         <a href="{URL_ALL}" class="btn btn-default">Tất cả</a>
 
@@ -19,10 +20,28 @@
         <div class="clearfix"></div>
     </div>
 
+        <div class="librarymgt-search" style="margin: 15px 0;">
+            <form method="get" action="{URL_ALL}" class="form-inline">
+                <input type="hidden" name="{NV_LANG_VARIABLE}" value="{NV_LANG_DATA}">
+                <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}">
+                <input type="hidden" name="catid" value="{CURRENT_CATID}">
+
+                <div class="form-group">
+                    <input type="text" name="q" value="{Q}" class="form-control"
+                        placeholder="Tìm theo tên sách hoặc tác giả">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Tìm</button>
+                <a href="{URL_ALL}" class="btn btn-default">Xoá lọc</a>
+            </form>
+        </div>
+
+    <!-- ===== Không có sách ===== -->
     <!-- BEGIN: empty -->
     <div class="alert alert-info">Chưa có sách.</div>
     <!-- END: empty -->
 
+    <!-- ===== Danh sách sách ===== -->
     <!-- BEGIN: has_books -->
     <div class="row librarymgt-grid">
         <!-- BEGIN: loop -->
@@ -61,6 +80,7 @@
         <!-- END: loop -->
     </div>
 
+    <!-- ===== Phân trang ===== -->
     <!-- BEGIN: gp -->
     <div class="text-center">{GENERATE_PAGE}</div>
     <!-- END: gp -->
