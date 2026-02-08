@@ -39,7 +39,7 @@ if ($nv_Request->isset_request('save', 'post')) {
         $book = $db->query($sql)->fetch();
         
         if (!empty($book)) {
-            // Kiểm tra user có yêu cầu đang chờ hoặc sách chưa trả không
+            // Kiểm tra user có yêu cầu đang chờ hoặc sách chưa trả không (fix)
             $sql_check = 'SELECT COUNT(*) FROM ' . $tb_borrow . ' 
                           WHERE user_id = ' . $user_info['userid'] . ' 
                           AND status IN (0, 1, 4)'; // 0: chờ duyệt, 1: đang mượn, 4: quá hạn

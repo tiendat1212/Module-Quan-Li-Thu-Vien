@@ -89,7 +89,7 @@ while ($row = $result->fetch()) {
     $status_class = '';
     $can_cancel = false;
     
-    // Sửa đoạn Switch trong borrowed.php
+    // Sửa đoạn Switch trong borrowed.php để đồng bộ với định nghĩa trạng thái trong borrowed.php
     switch ((int) $row['status']) {
         case 0: 
             $status_text = 'Chờ duyệt'; $status_class = 'warning'; $can_cancel = true; break;
