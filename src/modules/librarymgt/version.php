@@ -11,8 +11,8 @@
 
 $module_version = [
     'name' => 'Library', // tên module
-    'modfuncs' => 'main', // Danh sách các func
-    'submenu' => 'main', // Các funcs hiển thị submenu
+    'modfuncs' => 'main,detail,borrow,borrowed', // Danh sách các func
+    'submenu' => 'main,detail,borrow,borrowed', // Các funcs hiển thị submenu
     'is_sysmod' => 0,// module hệ thống hay không? 1: hệ thống 0: module thường
     'virtual' => 0, // có phải module ảo không? 1: thật, 0:ảo
     'version' => '5.0.00', // phiên bản của module
