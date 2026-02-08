@@ -2,13 +2,30 @@
 <div class="librarymgt book-detail">
     <div class="page-header">
         <h1>{BOOK.title}</h1>
-        <a href="{BACK_URL}" class="btn btn-default">
-            <i class="fa fa-arrow-left"></i> Quay lại
-        </a>
+        <div class="header-control-buttons">
+            <a href="{BACK_URL}" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i> Quay lại
+            </a>
+
+            <div class="book-actions">
+                <!-- BEGIN: can_borrow -->
+                <button type="button" class="btn btn-primary btn-lg btn-borrow" data-book-id="{BOOK.id}">
+                    <i class="fa fa-book"></i> Mượn sách
+                </button>
+                <!-- END: can_borrow -->
+
+                <!-- BEGIN: cannot_borrow -->
+                <button type="button" class="btn btn-default btn-lg" disabled data-toggle="tooltip" title="{DISABLED_REASON}">
+                    <i class="fa fa-lock"></i> Không thể mượn
+                </button>
+                <!-- END: cannot_borrow -->
+            </div>
+        </div>
+        
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-sm-5">
+        <div class="col-md-10 col-sm-10">
             <div class="book-detail-cover">
                 <!-- BEGIN: has_image -->
                 <img src="{BOOK.image}" alt="{BOOK.title}" class="img-responsive img-thumbnail">
@@ -22,7 +39,7 @@
             </div>
         </div>
 
-        <div class="col-md-8 col-sm-7">
+        <div class="col-md-12 col-sm-12">
             <div class="book-detail-info">
                 <table class="table table-striped">
                     <tbody>
@@ -66,19 +83,7 @@
                     <p>{BOOK.description}</p>
                 </div>
 
-                <div class="book-actions">
-                    <!-- BEGIN: can_borrow -->
-                    <button type="button" class="btn btn-primary btn-lg btn-borrow" data-book-id="{BOOK.id}">
-                        <i class="fa fa-book"></i> Mượn sách
-                    </button>
-                    <!-- END: can_borrow -->
-
-                    <!-- BEGIN: cannot_borrow -->
-                    <button type="button" class="btn btn-default btn-lg" disabled data-toggle="tooltip" title="{DISABLED_REASON}">
-                        <i class="fa fa-lock"></i> Không thể mượn
-                    </button>
-                    <!-- END: cannot_borrow -->
-                </div>
+                
             </div>
         </div>
     </div>
