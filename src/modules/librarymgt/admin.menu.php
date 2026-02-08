@@ -38,3 +38,5 @@ $submenu['main'] = [
     'title' => $nv_Lang->getModule('library_manager'),
     'submenu' => $menu_sub
 ];
+
+// bla bla

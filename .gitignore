@@ -103,6 +103,7 @@
 !/src/uploads/banners/webnhanh_vn.png
 !/src/data/cache/index.html
 !/src/data/tmp/index.html
+!/src/VINADES
 
 # Ignore documentation files
 *.docx

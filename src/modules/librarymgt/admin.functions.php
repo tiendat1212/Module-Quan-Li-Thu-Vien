@@ -270,6 +270,7 @@ function nv_admin_delete_book($book_id)
     return ['success' => false, 'error' => 'Lỗi xóa sách: ' . $db->error];
 }
 
+// bla bla
 function borrows_manager_can_cancel($status) {
     return $status == BORROW_PENDING;
 }
