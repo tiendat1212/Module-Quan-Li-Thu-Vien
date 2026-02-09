@@ -32,7 +32,11 @@ function borrows_manager_can_return($status) {
     return in_array($status, [BORROW_BORROWING, BORROW_OVERDUE]); 
 } 
 function borrows_manager_auto_overdue($db, $borrow_table) { 
-    $db->query(" UPDATE $borrow_table SET status = " . BORROW_OVERDUE . " WHERE status = " . BORROW_BORROWING . " AND due_date < NOW() "); 
+    // Chỉ cập nhật "Quá hạn" cho những yêu cầu đang ở trạng thái "Đang mượn" (1)
+    $db->query("UPDATE $borrow_table SET status = " . BORROW_OVERDUE . " 
+                WHERE status = " . BORROW_BORROWING . " 
+                AND due_date IS NOT NULL 
+                AND due_date < NOW()"); 
 }
 
 $page_title = $nv_Lang->getModule('borrows_manager');
