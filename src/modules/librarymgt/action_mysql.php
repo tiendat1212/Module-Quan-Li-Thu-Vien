@@ -84,7 +84,6 @@ $sql_create_module[] = 'CREATE TABLE ' . NV_PREFIXLANG . '_' . $module_data . "_
   KEY idx_status_due (status, due_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 
-
 // Sample data: categories
 $sql_create_module[] = 'INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . "_categories
 (title, alias, description, weight, status, add_time)

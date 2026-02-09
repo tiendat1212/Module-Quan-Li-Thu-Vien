@@ -88,6 +88,7 @@ $lang_module['placeholder_description'] = 'Mô tả ngắn về sách (tùy ch�
 $lang_module['placeholder_image_edit'] = 'Chọn ảnh bìa mới (jpg, png, gif) để thay thế';
 $lang_module['current_image'] = 'Ảnh bìa hiện tại';
 $lang_module['save'] = 'Lưu';
+$lang_module['reset_filters'] = 'Bỏ lọc';
 $lang_module['select_book'] = 'Chọn sách để sửa';
 $lang_module['select_book_prompt'] = 'Sách cần sửa';
 $lang_module['edit'] = 'Sửa';

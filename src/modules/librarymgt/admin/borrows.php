@@ -3,6 +3,42 @@ if (!defined('NV_IS_FILE_ADMIN')) {
     exit('Stop!!!');
 }
 
+
+define('BORROW_PENDING', 0); // Chờ duyệt 
+define('BORROW_BORROWING', 1); // Đang mượn 
+define('BORROW_RETURNED', 2); // Đã trả 
+define('BORROW_CANCELED', 3); // Đã huỷ 
+define('BORROW_OVERDUE', 4); // Quá hạn
+function borrows_manager_status_map() { 
+    return [ 
+        BORROW_PENDING => ['Chờ duyệt', 'warning'], 
+        BORROW_BORROWING => ['Đang mượn', 'info'], 
+        BORROW_RETURNED => ['Đã trả', 'success'], 
+        BORROW_CANCELED => ['Đã huỷ', 'default'], 
+        BORROW_OVERDUE => ['Quá hạn', 'danger'], 
+        ]; 
+} 
+function borrows_manager_status_info($status) { 
+    $map = borrows_manager_status_map(); 
+    return $map[$status] ?? ['Không xác định', 'default']; 
+} 
+function borrows_manager_can_approve($status) { 
+    return $status == BORROW_PENDING; 
+} 
+function borrows_manager_can_cancel($status) { 
+    return $status == BORROW_PENDING; 
+} 
+function borrows_manager_can_return($status) { 
+    return in_array($status, [BORROW_BORROWING, BORROW_OVERDUE]); 
+} 
+function borrows_manager_auto_overdue($db, $borrow_table) { 
+    // Chỉ cập nhật "Quá hạn" cho những yêu cầu đang ở trạng thái "Đang mượn" (1)
+    $db->query("UPDATE $borrow_table SET status = " . BORROW_OVERDUE . " 
+                WHERE status = " . BORROW_BORROWING . " 
+                AND due_date IS NOT NULL 
+                AND due_date < NOW()"); 
+}
+
 $page_title = $nv_Lang->getModule('borrows_manager');
 
 $borrow_table = NV_PREFIXLANG . '_' . $module_data . '_borrows';
@@ -18,6 +54,9 @@ $xtpl = new XTemplate(
         'borrows.tpl',
         NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file
     );
+
+
+
 
 if ($action == 'approve' && $id > 0) {
 
