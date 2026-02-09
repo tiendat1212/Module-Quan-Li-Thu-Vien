@@ -83,6 +83,7 @@ $xtpl->assign('SORT_TOGGLE', ($sort === 'ASC') ? 'DESC' : 'ASC');
 $xtpl->assign('SORT_ASC_SELECTED', ($sort === 'ASC') ? 'selected="selected"' : '');
 $xtpl->assign('SORT_DESC_SELECTED', ($sort === 'DESC') ? 'selected="selected"' : '');
 $xtpl->assign('ADD_BOOK_URL', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_add');
+$xtpl->assign('RESET_URL', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main');
 
 foreach ($categories as $id => $title) {
     $xtpl->assign('CATEGORY_OPTION', [

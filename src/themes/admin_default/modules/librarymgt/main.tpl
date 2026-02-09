@@ -5,7 +5,14 @@
         <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}" />
 
         <div class="form-group">
-            <input class="form-control" type="text" name="search" value="{SEARCH}" placeholder="{LANG.search_books}" />
+            <div class="input-group">
+                <input class="form-control" id="books-search" type="text" name="search" value="{SEARCH}" placeholder="{LANG.search_books}" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" aria-label="Clear" onclick="document.getElementById('books-search').value='';document.getElementById('books-search').focus();">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </span>
+            </div>
         </div>
 
         <div class="form-group">
@@ -33,6 +40,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">{LANG.search}</button>
+        <a href="{RESET_URL}" class="btn btn-default btn-sm">{LANG.reset_filters}</a>
 
         <a href="{ADD_BOOK_URL}" class="btn btn-success pull-right">
             <i class="fa fa-plus"></i> {LANG.add_new}
