@@ -32,6 +32,13 @@ if (empty($book)) {
     nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
 }
 
+// Xử lý đường dẫn ảnh (Thêm đoạn này)
+if (!empty($book['image']) && file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $book['image'])) {
+    $book['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $book['image'];
+} else {
+    $book['image'] = ''; // Hoặc để trống để template tự xử lý khối no_image
+}
+
 // Kiểm tra xem sách có còn sẵn không
 $available_quantity = (int) $book['quantity'];
 
