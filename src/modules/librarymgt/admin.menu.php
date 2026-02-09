@@ -20,13 +20,8 @@ if (!defined('NV_ADMIN')) {
 $menu_sub = [];
 
 // Nhóm quản lý sách (nhánh main)
-$menu_sub['books'] = $nv_Lang->getModule('books_manager');
 $menu_sub['book_add'] = $nv_Lang->getModule('book_add');
 $menu_sub['book_edit'] = $nv_Lang->getModule('book_edit');
-// Nếu có file book_delete.php thì giữ, không có thì có thể bỏ
-$menu_sub['book_delete'] = $nv_Lang->getModule('book_delete');
-// Nếu có api.php thì giữ, không có thì có thể bỏ
-$menu_sub['api'] = $nv_Lang->getModule('api');
 
 // Nhóm quản lý chung (nhánh dev-ngan)
 $menu_sub['cat'] = $nv_Lang->getModule('cat_manager');
