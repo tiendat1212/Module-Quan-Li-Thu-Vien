@@ -241,3 +241,5 @@ function nv_admin_delete_book($book_id)
 
     return ['success' => false, 'error' => 'Lỗi xóa sách: ' . $db->error];
 }
+
+// Lấy danh sách tác giả để gợi ý
