@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1770044823091,
@@ -16,6 +16,10 @@
                 {
                     "date": 1770051635300,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <?php\r\n-if (!defined('NV_MAINFILE')) {\r\n+if (!defined('NV_SYSTEM')) {\r\n     exit('Stop!!!');\r\n }\r\n \r\n define('NV_IS_MOD_LIBRARYMGT', true);\r\n"
+                },
+                {
+                    "date": 1770174214587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,18 @@\n-<?php\r\n-if (!defined('NV_SYSTEM')) {\r\n-    exit('Stop!!!');\r\n-}\r\n-\r\n-define('NV_IS_MOD_LIBRARYMGT', true);\r\n+<?php\n+\n+/**\n+ * NukeViet Content Management System\n+ * @version 5.x\n+ * @author VINADES.,JSC <contact@vinades.vn>\n+ * @copyright (C) 2009-2025 VINADES.,JSC. All rights reserved\n+ * @license GNU/GPL version 2 or any later version\n+ * @see https://github.com/nukeviet The NukeViet CMS GitHub project\n+ */\n+\n+if (!defined('NV_SYSTEM')) {\n+    exit('Stop!!!');\n+}\n+\n+define('NV_IS_MOD_LIBRABYMGT', true);\n+\n+// list các mảng dùng chung, hoặc hàm dùng chung cho ngoài site\n"
                 }
             ],
             "date": 1770044823091,
