@@ -83,22 +83,3 @@ $sql_create_module[] = 'CREATE TABLE ' . NV_PREFIXLANG . '_' . $module_data . "_
   KEY idx_user_status (user_id, status),
   KEY idx_status_due (status, due_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-
-
-// Sample data: categories
-$sql_create_module[] = 'INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . "_categories
-(title, alias, description, weight, status, add_time)
-VALUES
-('Công nghệ thông tin', 'cong-nghe-thong-tin', 'Sách CNTT', 1, 1, " . NV_CURRENTTIME . "),
-('Kinh tế', 'kinh-te', 'Sách kinh tế', 2, 1, " . NV_CURRENTTIME . "),
-('Văn học', 'van-hoc', 'Sách văn học', 3, 1, " . NV_CURRENTTIME . ")";
-
-
-// Sample data: books
-$sql_create_module[] = 'INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . "_books
-(cat_id, title, alias, author, publisher, publish_year, isbn, quantity, description, status, add_time)
-VALUES
-(1, 'Lập trình PHP cơ bản', 'lap-trinh-php-co-ban', 'Nguyễn Văn A', 'NXB CNTT', 2022, 'ISBN001', 5, 'Sách học PHP cơ bản', 1, " . NV_CURRENTTIME . "),
-(1, 'Lập trình Laravel', 'lap-trinh-laravel', 'Trần Văn B', 'NXB CNTT', 2023, 'ISBN002', 3, 'Framework Laravel', 1, " . NV_CURRENTTIME . "),
-(2, 'Nguyên lý kinh tế học', 'nguyen-ly-kinh-te', 'Adam Smith', 'NXB Kinh tế', 2020, 'ISBN003', 4, 'Kinh tế học căn bản', 1, " . NV_CURRENTTIME . "),
-(3, 'Truyện Kiều', 'truyen-kieu', 'Nguyễn Du', 'NXB Văn học', 2019, 'ISBN004', 2, 'Tác phẩm văn học kinh điển', 1, " . NV_CURRENTTIME . ")";
