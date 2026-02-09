@@ -43,7 +43,15 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $data['description'] = $nv_Request->get_textarea('description', 'post', '');
     $data['status'] = $nv_Request->get_int('status', 'post', 1);
 
-    if (isset($_FILES['image_file']) and is_uploaded_file($_FILES['image_file']['tmp_name'])) {
+    $image = $nv_Request->get_string('image', 'post', ''); 
+    if (nv_is_file($image, NV_UPLOADS_DIR . '/' . $module_upload)) {
+    // Cắt bỏ phần URL tuyệt đối để chỉ lưu đường dẫn tương đối trong DB
+        $data['image'] = substr($image, strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
+    } else {
+        $data['image'] = '';
+    }
+
+/*    if (isset($_FILES['image_file']) and is_uploaded_file($_FILES['image_file']['tmp_name'])) {
         $upload_dir = NV_UPLOADS_REAL_DIR . '/' . $module_upload;
         if (!is_dir($upload_dir)) {
             @mkdir($upload_dir, 0755, true);
@@ -61,7 +69,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
             @chmod($upload_info['name'], 0644);
             $data['image'] = $module_upload . '/' . $upload_info['basename'];
         }
-    }
+    }*/
 
     if (empty($errors)) {
         $result = nv_admin_insert_book($data);
@@ -121,6 +129,14 @@ if (!empty($errors)) {
     }
     $xtpl->parse('main.error');
 }
+
+$xtpl->assign('UPLOADS_DIR_USER', NV_UPLOADS_DIR . '/' . $module_upload);
+
+// Kiểm tra nếu đã có ảnh thì hiển thị đầy đủ đường dẫn để xem trước
+if (!empty($data['image']) and is_file(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $data['image'])) {
+    $data['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data['image'];
+}
+$xtpl->assign('DATA', $data);
 
 $xtpl->parse('main');
 $contents = $xtpl->text('main');

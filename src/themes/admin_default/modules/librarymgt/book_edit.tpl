@@ -114,14 +114,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">{LANG.image}</label>
                 <div class="col-sm-9">
-                    <!-- BEGIN: current_image -->
-                    <div class="form-group">
-                        <p><strong>{LANG.current_image}:</strong></p>
-                        <img src="{UPLOAD_URL}/{CURRENT_IMAGE}" alt="Book cover" style="max-width: 200px; max-height: 300px; margin-bottom: 10px; border: 1px solid #ddd; padding: 5px;" />
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="image" id="id_image" value="{DATA.image}" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" data-toggle="selectfile" data-target="id_image" data-path="{UPLOADS_DIR_USER}" data-type="image">
+                                <em class="fa fa-folder-open-o"></em> {GLANG.browse_image}
+                            </button>
+                        </span>
                     </div>
-                    <!-- END: current_image -->
-                    <input type="file" name="image_file" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
-                    <p class="help-block">{LANG.placeholder_image_edit}</p>
+        
+                    <div style="margin-top: 10px;">
+                        <p><strong>{LANG.current_image}:</strong></p>
+                        <img src="{NV_BASE_SITEURL}{NV_UPLOADS_DIR}/{MODULE_UPLOAD}/{CURRENT_IMAGE}" alt="Book cover" class="img-thumbnail" style="max-width: 200px;" />
+                    </div>
                 </div>
             </div>
 
