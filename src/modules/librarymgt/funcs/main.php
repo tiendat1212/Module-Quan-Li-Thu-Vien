@@ -95,6 +95,15 @@ while ($row = $result->fetch()) {
     $row['name'] = $row['name'] ?? '';
     $row['add_time'] = !empty($row['add_time']) ? nv_date('d/m/Y', (int) $row['add_time']) : '';
     $row['detail_link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=detail&id=' . (int) $row['id'];
+    // --- BẮT ĐẦU ĐOẠN XỬ LÝ ẢNH ---
+    if (!empty($row['image']) && file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $row['image'])) {
+        // Nếu có ảnh trong thư mục uploads/librarymgt
+        $row['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['image'];
+    } else {
+        // Nếu không có ảnh, để trống để template render khối no_image
+        $row['image'] = '';
+    }
+    // --- KẾT THÚC ĐOẠN XỬ LÝ ẢNH ---
     $books[] = $row;
 }
 

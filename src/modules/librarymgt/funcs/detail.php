@@ -32,6 +32,13 @@ if (empty($book)) {
     nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
 }
 
+// Xử lý đường dẫn ảnh (Thêm đoạn này)
+if (!empty($book['image']) && file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $book['image'])) {
+    $book['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $book['image'];
+} else {
+    $book['image'] = ''; // Hoặc để trống để template tự xử lý khối no_image
+}
+
 // Kiểm tra xem sách có còn sẵn không
 $available_quantity = (int) $book['quantity'];
 
@@ -40,10 +47,10 @@ $can_borrow = false;
 $borrow_disabled_reason = '';
 
 if (defined('NV_IS_USER')) {
-    // Kiểm tra xem user có sách đang mượn hoặc quá hạn chưa trả không
+    // Kiểm tra xem user có sách đang mượn hoặc quá hạn chưa trả không (fix)  
     $sql_check = 'SELECT COUNT(*) FROM ' . $tb_borrow . ' 
                   WHERE user_id = ' . $user_info['userid'] . ' 
-                  AND status IN (0, 1, 2)'; // 0: chờ duyệt, 1: đang mượn, 2: quá hạn
+                  AND status IN (0, 1, 4)'; // 0: chờ duyệt, 1: đang mượn, 4: quá hạn
     
     $has_pending = (int) $db->query($sql_check)->fetchColumn();
     

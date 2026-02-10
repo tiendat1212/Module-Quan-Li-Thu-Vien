@@ -12,7 +12,7 @@
 if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN')) {
     exit('Stop!!!');
 }
-$allow_func = array('main', 'books', 'book_add', 'book_edit');
+$allow_func = array('main', 'books', 'book_add', 'book_edit', 'book_delete', 'api', 'cat', 'cat_add', 'cat_edit', 'cat_delete', 'borrows');
 define('NV_IS_FILE_ADMIN', true);
 
 if (!function_exists('nv_librarymgt_get_books_list')) {

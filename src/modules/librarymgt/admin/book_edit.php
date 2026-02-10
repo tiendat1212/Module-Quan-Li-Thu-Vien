@@ -88,7 +88,21 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $data['description'] = $nv_Request->get_textarea('description', 'post', '');
     $data['status'] = $nv_Request->get_int('status', 'post', 1);
 
-    if (isset($_FILES['image_file']) and is_uploaded_file($_FILES['image_file']['tmp_name'])) {
+ // Lấy đường dẫn từ form (giá trị có thể là /uploads/librarymgt/anh.jpg)
+$image_path = $nv_Request->get_string('image', 'post', ''); 
+
+// Chuỗi cần tìm để cắt (ví dụ: /uploads/librarymgt/)
+$prefix = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/';
+
+if (!empty($image_path) && strpos($image_path, $prefix) !== false) {
+    // Nếu đường dẫn chứa đầy đủ prefix, ta cắt bỏ nó đi
+    $data['image'] = str_replace($prefix, '', $image_path);
+} else {
+    // Nếu là đường dẫn ngắn sẵn hoặc không khớp, giữ nguyên tên file
+    $data['image'] = basename($image_path);
+}
+
+/*    if (isset($_FILES['image_file']) and is_uploaded_file($_FILES['image_file']['tmp_name'])) {
         $upload_dir = NV_UPLOADS_REAL_DIR . '/' . $module_upload;
         if (!is_dir($upload_dir)) {
             @mkdir($upload_dir, 0755, true);
@@ -113,7 +127,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
             }
             $data['image'] = $module_upload . '/' . $upload_info['basename'];
         }
-    }
+    }*/
 
     if (empty($errors)) {
         $result = nv_admin_update_book($book_id, $data);
@@ -140,6 +154,9 @@ $xtpl->assign('UPLOAD_URL', NV_BASE_SITEURL . NV_UPLOADS_DIR);
 $xtpl->assign('NV_NAME_VARIABLE', NV_NAME_VARIABLE);
 $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('BOOK_ID', $book_id);
+// Thêm vào đoạn gần cuối file trước khi parse main
+$xtpl->assign('UPLOADS_DIR_USER', NV_UPLOADS_DIR . '/' . $module_upload);
+$xtpl->assign('MODULE_UPLOAD', $module_upload);
 $xtpl->assign('DATA', $data);
 $xtpl->assign('BACK_URL', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
 

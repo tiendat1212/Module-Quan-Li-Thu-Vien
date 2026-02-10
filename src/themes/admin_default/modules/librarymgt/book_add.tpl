@@ -76,7 +76,14 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">{LANG.image}</label>
                 <div class="col-sm-9">
-                    <input type="file" name="image_file" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="image" id="image" value="{DATA.image}" maxlength="250" />
+                        <span class="input-group-btn">
+                            <button type="button" data-toggle="selectfile" data-target="image" data-path="{UPLOADS_DIR_USER}" data-type="image" class="btn btn-info">
+                                <em class="fa fa-folder-open-o"></em> {GLANG.browse_image}
+                            </button>
+                        </span>
+                    </div>
                     <p class="help-block">{LANG.placeholder_image}</p>
                 </div>
             </div>

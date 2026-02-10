@@ -1,0 +1,16 @@
+[33m2fa088a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtest[m[33m)[m HEAD@{0}: reset: moving to ORIG_HEAD
+[33m2fa088a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtest[m[33m)[m HEAD@{1}: reset: moving to HEAD
+[33m2fa088a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtest[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33m2fa088a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtest[m[33m)[m HEAD@{3}: pull origin main: Fast-forward
+[33m8f09af6[m[33m ([m[1;32mmain[m[33m)[m HEAD@{4}: checkout: moving from main to test
+[33m8f09af6[m[33m ([m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from dev-ngan to main
+[33m67faf86[m[33m ([m[1;32mdev-ngan[m[33m)[m HEAD@{6}: checkout: moving from main to dev-ngan
+[33m8f09af6[m[33m ([m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from dev-ngan to main
+[33m67faf86[m[33m ([m[1;32mdev-ngan[m[33m)[m HEAD@{8}: commit: Module quan ly muon tra
+[33md9c25c3[m HEAD@{9}: commit: Tao cac function dung chung cua quan ly tra muon
+[33m62d6bf7[m HEAD@{10}: commit: Sua logic hien thi loi
+[33me60f304[m HEAD@{11}: commit: Tao khung quan ly tra muon
+[33m74229b5[m HEAD@{12}: commit: crud category
+[33m8f09af6[m[33m ([m[1;32mmain[m[33m)[m HEAD@{13}: checkout: moving from dev-ngan to dev-ngan
+[33m8f09af6[m[33m ([m[1;32mmain[m[33m)[m HEAD@{14}: checkout: moving from main to dev-ngan
+[33m8f09af6[m[33m ([m[1;32mmain[m[33m)[m HEAD@{15}: clone: from https://github.com/tiendat1212/Module-Quan-Li-Thu-Vien.git
