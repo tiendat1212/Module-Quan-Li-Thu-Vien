@@ -108,6 +108,4 @@
 *.docx
 *.doc
 *.htaccess
-
-!/src/data/config/config_global.php
-!/src/config.php
+/src/data/config/config_global.php
