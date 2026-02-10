@@ -67,12 +67,38 @@
             <!-- BEGIN: loop -->
             <tr>
                 <td class="text-center">{ROW.id}</td>
-                <td>{ROW.title}</td>
+                <td>
+                    <a href="{ROW.detail_url}" target="_blank" rel="noopener">
+                        {ROW.title}
+                    </a>
+                </td>
                 <td>{ROW.author}</td>
                 <td>{ROW.cat_title}</td>
-                <td class="text-center">{ROW.quantity}</td>
                 <td class="text-center">
-                    <span class="label label-{ROW.status_class}">{ROW.status_text}</span>
+                    <form action="{CURRENT_URL}" method="post" class="form-inline">
+                        <input type="hidden" name="quantity_update" value="1" />
+                        <input type="hidden" name="book_id" value="{ROW.id}" />
+                        <input type="hidden" name="checkss" value="{ROW.checkss}" />
+                        <div class="input-group input-group-sm">
+                            <input type="number" name="quantity" class="form-control input-sm" value="{ROW.quantity}" min="0" style="width:80px" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm" title="{LANG.save}">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </td>
+                <td class="text-center">
+                    <form action="{CURRENT_URL}" method="post" class="form-inline">
+                        <input type="hidden" name="status_update" value="1" />
+                        <input type="hidden" name="book_id" value="{ROW.id}" />
+                        <input type="hidden" name="checkss" value="{ROW.checkss}" />
+                        <input type="hidden" name="new_status" value="{ROW.toggle_status}" />
+                        <button type="submit" class="btn btn-{ROW.status_class} btn-xs" title="{LANG.status}">
+                            {ROW.status_text}
+                        </button>
+                    </form>
                 </td>
                 <td class="text-center">{ROW.add_date}</td>
                 <td class="text-center text-nowrap">

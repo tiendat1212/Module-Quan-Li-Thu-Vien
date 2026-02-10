@@ -107,7 +107,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">{LANG.quantity}</label>
                 <div class="col-sm-9">
-                    <input type="number" name="quantity" class="form-control" value="{DATA.quantity}" placeholder="{LANG.placeholder_quantity}" />
+                    <input type="number" name="quantity" min="1" class="form-control" value="{DATA.quantity}" placeholder="{LANG.placeholder_quantity}" />
                 </div>
             </div>
 

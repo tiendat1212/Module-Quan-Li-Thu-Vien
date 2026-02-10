@@ -23,6 +23,45 @@ $status = $nv_Request->get_int('status', 'get', -1);
 $sort = $nv_Request->get_title('sort', 'get', 'ASC');
 $sort = ($sort === 'DESC') ? 'DESC' : 'ASC';
 
+$current_url = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA
+    . '&' . NV_NAME_VARIABLE . '=' . $module_name
+    . '&' . NV_OP_VARIABLE . '=main'
+    . '&search=' . urlencode($search)
+    . '&cat_id=' . $cat_id
+    . '&status=' . $status
+    . '&sort=' . $sort
+    . '&page=' . $page;
+
+$quantity_update = $nv_Request->get_int('quantity_update', 'post', 0);
+if ($quantity_update) {
+    $book_id = $nv_Request->get_int('book_id', 'post', 0);
+    $checkss = $nv_Request->get_title('checkss', 'post', '');
+    $quantity = $nv_Request->get_int('quantity', 'post', 0);
+
+    if ($book_id > 0 && $checkss === md5($book_id . NV_CHECK_SESSION)) {
+        $tb_books = NV_PREFIXLANG . '_' . $module_data . '_books';
+        $quantity = max(0, $quantity);
+        $db->query('UPDATE ' . $tb_books . ' SET quantity = ' . $quantity . ', edit_time = ' . time() . ' WHERE id = ' . $book_id);
+    }
+
+    nv_redirect_location($current_url);
+}
+
+$status_update = $nv_Request->get_int('status_update', 'post', 0);
+if ($status_update) {
+    $book_id = $nv_Request->get_int('book_id', 'post', 0);
+    $checkss = $nv_Request->get_title('checkss', 'post', '');
+    $new_status = $nv_Request->get_int('new_status', 'post', 0);
+    $new_status = ($new_status == 1) ? 1 : 0;
+
+    if ($book_id > 0 && $checkss === md5($book_id . NV_CHECK_SESSION)) {
+        $tb_books = NV_PREFIXLANG . '_' . $module_data . '_books';
+        $db->query('UPDATE ' . $tb_books . ' SET status = ' . $new_status . ', edit_time = ' . time() . ' WHERE id = ' . $book_id);
+    }
+
+    nv_redirect_location($current_url);
+}
+
 $op_delete = $nv_Request->get_title('op_delete', 'get', '');
 $book_id = $nv_Request->get_int('book_id', 'get', 0);
 $checkss = $nv_Request->get_title('checkss', 'get', '');
@@ -31,7 +70,7 @@ if ($op_delete === 'delete' && $book_id > 0) {
     if ($checkss === md5($book_id . NV_CHECK_SESSION)) {
         $delete_result = nv_admin_delete_book($book_id);
         if ($delete_result['success']) {
-            nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=main');
+            nv_redirect_location($current_url);
         }
     }
 }
@@ -52,9 +91,12 @@ $rows = [];
 foreach ($list['books'] as $row) {
     $row_id = (int) $row['id'];
     $row_status = (int) $row['status'];
+    $toggle_status = $row_status ? 0 : 1;
     $row_add_time = (int) $row['add_time'];
     $rows[] = [
         'id' => $row_id,
+        'checkss' => md5($row_id . NV_CHECK_SESSION),
+        'toggle_status' => $toggle_status,
         'title' => (string) $row['title'],
         'author' => (string) $row['author'],
         'cat_title' => isset($row['cat_title']) ? (string) $row['cat_title'] : '',
@@ -64,6 +106,7 @@ foreach ($list['books'] as $row) {
         'status_class' => $row_status ? 'success' : 'danger',
         'add_time' => $row_add_time,
         'add_date' => nv_date('d/m/Y', $row_add_time),
+        'detail_url' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=detail&id=' . $row_id,
         'edit_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=book_edit&amp;book_id=' . $row_id,
         'delete_url' => NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main&amp;op_delete=delete&amp;book_id=' . $row_id . '&amp;checkss=' . md5($row_id . NV_CHECK_SESSION)
     ];
@@ -75,6 +118,7 @@ $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
 $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('OP', $op);
+$xtpl->assign('CURRENT_URL', $current_url);
 $xtpl->assign('SEARCH', $search);
 $xtpl->assign('CAT_ID', $cat_id);
 $xtpl->assign('STATUS', $status);
